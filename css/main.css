@@ -1,0 +1,101 @@
+html,body {
+  margin: 0;
+  padding: 0; 
+  
+}
+
+* {
+  box-sizing: border-box;
+  color: #555;
+  font-family: Menlo, Monaco, Consolas, "Helvetica Neue", Helvetica, "Courier New", 微软雅黑, monospace, Arial, sans-serif, 黑体;
+  font-size: 14px;
+}
+
+ul {
+  margin: 0;
+  padding-left: 30px;
+  line-height: 20px;
+}
+
+li {
+  list-style: none;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  fill: #555;
+}
+
+.icon-square {
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    cursor: pointer;
+    background-color: #000;
+}
+
+.side-top {
+  height: 50px;
+  border-bottom: #DDD 1px solid;
+}
+
+.side-left {
+  border-right: #DDD 1px solid;
+  position: absolute;
+  left: 0;
+  top: 50px;
+  bottom: 0;
+  width: 50%;
+  overflow: hidden;
+  padding: 10px;
+  
+}
+
+
+.side-left textarea {
+  width: 100%;
+  height: 100%;
+  outline: none;
+  border: none;
+  resize: none;
+}
+
+.side-right {
+  position: absolute;
+  left: 50%;
+  top: 50px;
+  bottom: 0;
+  width: 50%;
+  overflow: hidden;
+  padding: 10px;
+}
+
+
+.keyval .key {
+  color: #92278f;
+  font-weight: bold;
+  margin-left: 20px;
+}
+
+.keyval .val {
+  color: #3ab54a;
+  font-weight: bold;
+}
+
+.keyval .val-string {
+  color: #3ab54a;
+}
+
+.keyval .val-number {
+  color: #25aae2;
+}
+
+.keyval .val-boolean {
+  color: #f3934e;
+}
+
+.brace-end {
+  margin-left: 20px;
+}

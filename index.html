@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JSON</title>
+    <link href="css/main.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <div id="app">
+      <div class="side-top">JSON</div>
+
+      
+      <div class="side-left">
+        <textarea  v-model="jsoncon"></textarea>
+      </div>
+
+      <div class="side-right">
+          <svg class="icon icon-square" @click="expand()">
+            <use xlink:href="svg/icon.svg#minus-square"></use>
+          </svg>
+          <span>{</span>
+          <vue-item :jsondata="jsonhtml"></vue-item>
+          <div class="brace-end">}</div>
+      </div>
+
+
+
+     
+    </div>
+
+     <script type="text/x-template" id="item-template">
+        <ul class="json-item">
+          <li>
+
+            <div class="keyval" v-for="(val, key) in jsondata">
+              <template v-if="typeof val != 'object'">
+                <span class="key">"{{key}}": </span>
+                <span class="val" >{{val}}</span>
+              </template>
+
+              <template v-if="typeof val == 'object'">
+                <span class="key">
+                  "{{key}}": 
+                </span>
+
+                <svg class="icon icon-square" @click="expand()">
+                  <use xlink:href="svg/icon.svg#minus-square"></use>
+                </svg>
+
+                <span v-show="true">
+                  <span>{</span>
+                  <span class="val" v-if="typeof val == 'object'">
+                    <vue-item :jsondata="val"></vue-item>
+                  </span> 
+                  <div class="brace-end">}</div>
+                </span>  
+
+                <span v-show="false">{{typeof val}}{...}</span>
+
+              </template>
+            </div>
+
+            
+          </li>
+        </ul>
+    </script>
+
+
+
+
+    
+
+    <script src="js/vue.min.js"></script>
+    <script src="js/parse.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
