@@ -11,10 +11,15 @@ html,body {
   font-size: 14px;
 }
 
+
 ul {
   margin: 0;
-  padding-left: 30px;
+  padding-left: 35px;
   line-height: 20px;
+}
+
+.side-right > ul {
+  padding: 0;
 }
 
 li {
@@ -25,7 +30,7 @@ li {
   width: 20px;
   height: 20px;
   display: inline-block;
-  fill: #555;
+  fill: #000;
 }
 
 .icon-square {
@@ -33,7 +38,18 @@ li {
     height: 12px;
     display: inline-block;
     cursor: pointer;
-    background-color: #000;
+    user-select: none
+}
+
+.icon-square-plus {
+  display: none;
+  user-select: none
+}
+
+
+
+.fold-view {
+  display: none;
 }
 
 .side-top {
@@ -49,7 +65,7 @@ li {
   bottom: 0;
   width: 50%;
   overflow: hidden;
-  padding: 10px;
+  
   
 }
 
@@ -60,6 +76,7 @@ li {
   outline: none;
   border: none;
   resize: none;
+  padding: 10px;
 }
 
 .side-right {
@@ -69,14 +86,15 @@ li {
   bottom: 0;
   width: 50%;
   overflow: hidden;
-  padding: 10px;
+  padding: 10px;    
+  overflow-y: scroll;
+  word-break: break-all;
 }
 
 
 .keyval .key {
   color: #92278f;
   font-weight: bold;
-  margin-left: 20px;
 }
 
 .keyval .val {
@@ -84,18 +102,31 @@ li {
   font-weight: bold;
 }
 
-.keyval .val-string {
+.keyval .val-String {
   color: #3ab54a;
 }
 
-.keyval .val-number {
+.keyval .val-Number {
   color: #25aae2;
 }
 
-.keyval .val-boolean {
+.keyval .val-Boolean {
   color: #f3934e;
+}
+
+.keyval .val-Null {
+  color: #f34e5c;
 }
 
 .brace-end {
   margin-left: 20px;
+}
+
+.arrlen {
+  color: #25aae2
+}
+
+.ex-alia {
+  cursor: pointer;
+  display: inline-block;
 }
