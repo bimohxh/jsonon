@@ -1,16 +1,19 @@
 html,body {
   margin: 0;
   padding: 0; 
-  
+  color: #555;
+  font-size: 14px;
 }
 
 * {
   box-sizing: border-box;
-  color: #555;
   font-family: Menlo, Monaco, Consolas, "Helvetica Neue", Helvetica, "Courier New", 微软雅黑, monospace, Arial, sans-serif, 黑体;
-  font-size: 14px;
+  
 }
 
+textarea {
+   color: #555;
+}
 
 ul {
   margin: 0;
@@ -25,6 +28,28 @@ ul {
 li {
   list-style: none;
 }
+
+a, svg {
+  transition: all,.5s,ease,0s;
+  -webkit-transition: all,.5s,ease,0s;
+}
+
+a:link, a:visited {
+  color: #999;
+}
+
+a:link svg, a:visited svg {
+  fill: #999; 
+}
+
+a:active, a:hover {
+  color: #f34e5c;
+}
+
+a:active svg, a:hover svg{
+  fill: #f34e5c;
+}
+
 
 .icon {
   width: 20px;
@@ -46,6 +71,14 @@ li {
   user-select: none
 }
 
+.logo {
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 24px;
+  color: #f34e5c;
+  padding: 10px;
+}
+
 
 
 .fold-view {
@@ -57,13 +90,24 @@ li {
   border-bottom: #DDD 1px solid;
 }
 
+.top-right {
+  float: right
+}
+
+.top-right a {
+  display: inline-block;
+  padding: 13px;
+}
+
+
+
 .side-left {
   border-right: #DDD 1px solid;
   position: absolute;
   left: 0;
   top: 50px;
   bottom: 0;
-  width: 50%;
+  width: 40%;
   overflow: hidden;
   
   
@@ -81,14 +125,48 @@ li {
 
 .side-right {
   position: absolute;
-  left: 50%;
+  left: 40%;
   top: 50px;
   bottom: 0;
-  width: 50%;
-  overflow: hidden;
-  padding: 10px;    
+  width: 60%;
+}
+
+.right-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding-top: 40px; 
+}
+
+
+.right-main {
+  width: 100%;
+  height: 100%;
+  padding: 10px;  
+  overflow: hidden; 
   overflow-y: scroll;
   word-break: break-all;
+}
+
+.right-main > ul {
+  padding: 0;
+}
+
+.right-bar {
+  height: 40px;
+  border-bottom: #DDD 1px solid;
+  width: 100%;
+  position: absolute;
+  top: 0px;
+}
+
+.right-bar svg {
+  fill: #999;
+  margin: 10px 0;
+  margin-left: 10px;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
 }
 
 
@@ -98,7 +176,6 @@ li {
 }
 
 .keyval .val {
-  color: #3ab54a;
   font-weight: bold;
 }
 
@@ -119,14 +196,37 @@ li {
 }
 
 .brace-end {
-  margin-left: 20px;
 }
 
-.arrlen {
-  color: #25aae2
-}
 
 .ex-alia {
   cursor: pointer;
   display: inline-block;
+  color: #25aae2;
+  padding: 0 2px;
+}
+
+
+.right-error {
+  color: #f1592a;
+  font-weight: bold;
+  padding: 10px;
+}
+
+
+.right-error code {
+  color: #c7254e;
+  background-color: #f9f2f4;
+  font-size: 90%;
+  padding: 5px;
+  display: inline-block;
+  margin: 20px 0;
+}
+
+.json-link:link, .json-link:visited {
+  color: #717171;
+  text-decoration: none 
+}
+.json-link:hover, .json-link:active {
+  color: #3ab54a;
 }
