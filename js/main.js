@@ -106,6 +106,7 @@ var App = new Vue({
     view: 'code',
     jsoncon: initJson,
     jsonhtml: JSON.parse(initJson),
+    compressStr: '',
     error: {}
   },
   methods: {
@@ -128,15 +129,32 @@ var App = new Vue({
 
     // 压缩
     compress: function () {
-     App.view = 'compress'
-     App.jsonhtml = Parse.compress(App.jsoncon)
+      if (App.view == 'error') {
+        return
+      }
+      if(App.view == 'compress') {
+         App.view = 'code'
+      } else {
+        App.view = 'compress'
+        App.compressStr = Parse.compress(App.jsoncon)
+      }
+    },
+
+    // 清空
+    clearAll: function () {
+      App.jsoncon = ''
     }
   },
   watch: {
     jsoncon: function () {
-      App.view = 'code'
       try {
-        App.jsonhtml = jsonlint.parse(this.jsoncon)
+        if(this.jsoncon.trim() == '') {
+          App.view = 'empty'
+        } else {
+          App.view = 'code'
+          App.jsonhtml = jsonlint.parse(this.jsoncon)   
+        }
+        
       } catch (ex) {
         App.view = 'error'
         App.error = {

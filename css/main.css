@@ -11,6 +11,8 @@ html,body {
   
 }
 
+
+
 textarea {
    color: #555;
 }
@@ -85,6 +87,11 @@ a:active svg, a:hover svg{
   margin-right: 3px;
 }
 
+.slogan {
+  font-size: 12px;
+  color: #b1b1b1
+}
+
 
 
 .fold-view {
@@ -108,14 +115,13 @@ a:active svg, a:hover svg{
 
 
 .side-left {
-  border-right: #DDD 1px solid;
   position: absolute;
   left: 0;
   top: 50px;
   bottom: 0;
   width: 40%;
   overflow: hidden;
-  
+  box-shadow: 1px 1px 1px rgba(245, 244, 244, 0.52);
   
 }
 
@@ -138,6 +144,7 @@ textarea {
   top: 50px;
   bottom: 0;
   width: 60%;
+  padding-left: 5px;
 }
 
 .right-inner {
@@ -184,7 +191,7 @@ textarea {
 .right-bar svg {
   fill: #999;
   margin: 10px 0;
-  margin-left: 10px;
+  margin-left: 20px;
   cursor: pointer;
   width: 16px;
   height: 16px;
@@ -244,4 +251,27 @@ textarea {
 }
 .json-link:hover, .json-link:active {
   color: #3ab54a;
+}
+
+.splitx {
+  width: 5px;
+  background-color: #EEE;
+  position: absolute;
+  top: 50px;
+  bottom: 0;
+  left: 40%;
+  z-index: 100;
+  cursor: w-resize;
+  border-right: rgba(221, 221, 221, 0.34) 1px solid;
+  border-left: rgba(221, 221, 221, 0.34) 1px solid;
+}
+
+.widnow-cover {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+  display: none
 }

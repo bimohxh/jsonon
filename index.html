@@ -13,9 +13,12 @@
         <a class="logo" href="/">
           <span class="on">Json</span><span >on</span>
         </a>  
+        <span class="slogan">
+          「也许」是最好用的JSON格式化验证工具
+        </span>
 
         <div class="top-right">
-          <a href="/" target="_blank">
+          <a href="https://github.com/bimohxh/jsonon" target="_blank">
             <svg class="icon">
               <use xlink:href="svg/icon.svg#github"></use>
             </svg>
@@ -26,6 +29,8 @@
       <div class="side-left">
         <textarea  v-model="jsoncon" id="jsontxt"></textarea>
       </div>
+
+      <div class="splitx"></div>
 
       <div class="side-right">
         <div class="right-inner">
@@ -42,6 +47,10 @@
               <use xlink:href="svg/icon.svg#collapse"></use>
             </svg>
 
+            <svg class="icon" title="清空" @click="clearAll()">
+              <use xlink:href="svg/icon.svg#clear"></use>
+            </svg>
+
           </div>
           <div class="right-main">
 
@@ -50,19 +59,27 @@
               <vue-outer :jsondata="jsonhtml" isend="true"></vue-outer>
             </div>
 
+            <!--空视图-->
+            <div class="view-code"  v-show="view == 'empty'">
+            </div>
+
             <!--格式化错误视图-->
             <div class="view-error" v-show="view == 'error'">
               <pre v-cloak>{{error.msg}}</pre>
             </div>
 
             <!--压缩视图-->
-            <textarea v-show="view == 'compress'">{{jsonhtml}}</textarea>
+            <textarea v-show="view == 'compress'">{{compressStr}}</textarea>
             
           </div>
         </div>
       </div>
 
-    </div>     
+    </div>    
+
+    <!--用于移动的时候遮住文本域 避免被选中-->
+    <div class="widnow-cover">
+    </div> 
 
     <!--最外层根结构-->
     <script type="text/x-template" id="outer-template">
@@ -147,6 +164,7 @@
     <script src="js/jquery.js"></script>
     <script src="js/jsonlint.js"></script>
     <script src="js/parse.js"></script>
+    <script src="js/editor.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>
