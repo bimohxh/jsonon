@@ -11,8 +11,7 @@
     <div id="app">
       <div class="side-top"> 
         <a class="logo" href="/">
-          <span>vo</span>
-          <span>Json</span>
+          <span class="on">Json</span><span >on</span>
         </a>  
 
         <div class="top-right">
@@ -29,12 +28,12 @@
       </div>
 
       <div class="side-right">
-        <div  class="right-error" v-if="error">
-          <code>{{error.pstr}}</code>
-          <div>{{error.msg}}</div>
-        </div>
-        <div class="right-inner" v-show="!error">
+        <div class="right-inner">
           <div class="right-bar">
+            <svg title="压缩" @click="compress()" v-bind:class="'icon active-' + (view == 'compress')">
+              <use xlink:href="svg/icon.svg#database"></use>
+            </svg>
+
             <svg class="icon" title="全部展开" @click="expandAll()">
               <use xlink:href="svg/icon.svg#expand"></use>
             </svg>
@@ -42,9 +41,23 @@
             <svg class="icon" title="全部折叠" @click="collapseAll()">
               <use xlink:href="svg/icon.svg#collapse"></use>
             </svg>
+
           </div>
           <div class="right-main">
-            <vue-outer :jsondata="jsonhtml" isend="true"></vue-outer>
+
+            <!--正常JSON格式化视图-->
+            <div class="view-code"  v-show="view == 'code'">
+              <vue-outer :jsondata="jsonhtml" isend="true"></vue-outer>
+            </div>
+
+            <!--格式化错误视图-->
+            <div class="view-error" v-show="view == 'error'">
+              <pre v-cloak>{{error.msg}}</pre>
+            </div>
+
+            <!--压缩视图-->
+            <textarea v-show="view == 'compress'">{{jsonhtml}}</textarea>
+            
           </div>
         </div>
       </div>
@@ -132,6 +145,8 @@
 
     <script src="js/vue.min.js"></script>
     <script src="js/jquery.js"></script>
+    <script src="js/jsonlint.js"></script>
+    <script src="js/parse.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>

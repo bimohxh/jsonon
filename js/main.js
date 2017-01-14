@@ -91,7 +91,7 @@ Vue.use({
 
 
 var initJson =  '{\n\
-    "name": "avJSON",\n\
+    "name": "Json on",\n\
     "description": "一个简洁的在线 JSON 查看器",\n\
     "open source": {\n\
       "是否开源": true,\n\
@@ -103,9 +103,10 @@ var initJson =  '{\n\
 var App = new Vue({
   el: '#app',
   data: {
+    view: 'code',
     jsoncon: initJson,
     jsonhtml: JSON.parse(initJson),
-    error: null
+    error: {}
   },
   methods: {
 
@@ -123,48 +124,25 @@ var App = new Vue({
       $('.icon-square-plus').show()
       $('.expand-view').hide()
       $('.fold-view').show()
+    },
+
+    // 压缩
+    compress: function () {
+     App.view = 'compress'
+     App.jsonhtml = Parse.compress(App.jsoncon)
     }
   },
   watch: {
     jsoncon: function () {
+      App.view = 'code'
       try {
-        App.error = null
-        App.jsonhtml = JSON.parse(this.jsoncon)
+        App.jsonhtml = jsonlint.parse(this.jsoncon)
       } catch (ex) {
-        var arrs = ex.message.split(' ')
-        var position = arrs[arrs.length - 1]
-        var positionStr =  App.jsoncon.substring(position - 30, position + 30)
-        console.log('==', positionStr)
-       
+        App.view = 'error'
         App.error = {
-          pstr: positionStr,
           msg: ex.message
         }
       }
     }
   }
 })
-
-
-
-
-function sel(el, start) { 
-    var t = document.getElementById(el)
-    if (start == -1) return//找不到内容则推出
-    var end = start + 1
-    if (typeof t.createTextRange != 'undefined') { //IE
-        var r = t.createTextRange();
-        //先将光标重合
-        r.moveStart('character', 0);
-        r.moveEnd('character', 0);
-        r.collapse(true);
-        r.moveEnd('character', end);
-        r.moveStart('character', start);
-        r.select();
-    }
-    else if (typeof t.selectionStart!='undefined') { //firefox,chrome 
-        t.selectionStart = start;
-        t.selectionEnd= end
-  }
-}
-
