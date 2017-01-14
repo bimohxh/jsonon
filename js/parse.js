@@ -1,6 +1,8 @@
 var Parse = {
+
+  // 压缩JSON
   compress: function (source) {
-    var index = 0, length = source.length, symbol, position, result = "";
+    var index = 0, length = source.length, symbol, position, result = ""
     while (index < length) {
       symbol = source[index];
       if ("\t\r\n ".indexOf(symbol) > -1) {
@@ -53,5 +55,4 @@ var Parse = {
     }
     return result;
   }
-
 }
