@@ -13,3 +13,7 @@ just open the `index.html` on a server (nginx or just run a simple python ` pyth
 - fold and expand the object and array value.
 - fold all and expand all.
 - identify link tags to `<a>...</a>` .
+
+
+## License
+[MIT](http://opensource.org/licenses/MIT)
