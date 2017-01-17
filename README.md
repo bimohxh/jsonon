@@ -2,7 +2,9 @@
 A json online viewer and formatter.
 
 ## Start
-just open the `index.html` on a server (nginx or just run a simple python ` python -m SimpleHTTPServer 3000`)
+`app` is the foled which include all site files that needed to run. you should run a server  (nginx or just run a simple python ` python -m SimpleHTTPServer 3000`) and point to `app`.
+
+If you just open file `app/index.html`, you will lost the icons.
 
 
 ## Featrue
@@ -18,6 +20,11 @@ just open the `index.html` on a server (nginx or just run a simple python ` pyth
 ## deploy on oss
 sometime we want to deploy the app on a oss static server,  we offer a tool to deploy site to qiniu oss.
 
+### initial node environment
+run
+```
+npm install
+```
 
 ### config qiniu 
 Create a  file `config/local_env.json` like :
@@ -38,3 +45,7 @@ Create a  file `config/local_env.json` like :
 ```
 npm run deploy
 ```
+
+
+## License
+[MIT](http://opensource.org/licenses/MIT)
