@@ -188,11 +188,16 @@ textarea {
   top: 0px;
 }
 
-.right-bar svg {
-  fill: #999;
+.right-bar > a {
   margin: 10px 0;
   margin-left: 20px;
   cursor: pointer;
+  font-family: '微软雅黑'
+}
+
+
+.right-bar svg {
+  fill: #999;
   width: 16px;
   height: 16px;
 }

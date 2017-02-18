@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta name="keywords" content="json,json在线解析,json格式化,json格式验证,json数组"/>
     <meta name="description" content="一款简洁优雅的在线json解析器，可能是目前最好用的json在线查看工具"/>
+    <link href="css/hint.min.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
   </head>
 
@@ -31,26 +32,34 @@
         <textarea  v-model="jsoncon" id="jsontxt"></textarea>
       </div>
 
-      <div class="splitx"></div>
+      <div class="splitx" ></div>
 
       <div class="side-right">
         <div class="right-inner">
           <div class="right-bar">
-            <svg title="压缩" @click="compress()" v-bind:class="'icon active-' + (view == 'compress')">
-              <use xlink:href="svg/icon.svg#database"></use>
-            </svg>
+            <a class="hint--top"  data-hint="压缩">
+              <svg  @click="compress()" v-bind:class="'icon  active-' + (view == 'compress')" >
+                <use xlink:href="svg/icon.svg#database"></use>
+              </svg>
+            </a>
+            
+            <a class="hint--top"  data-hint="全部展开">
+              <svg class="icon"  @click="expandAll()">
+                <use xlink:href="svg/icon.svg#expand"></use>
+              </svg>
+            </a>
 
-            <svg class="icon" title="全部展开" @click="expandAll()">
-              <use xlink:href="svg/icon.svg#expand"></use>
-            </svg>
+            <a class="hint--top"  data-hint="全部折叠">
+              <svg class="icon"  @click="collapseAll()">
+                <use xlink:href="svg/icon.svg#collapse"></use>
+              </svg>
+           </a>
 
-            <svg class="icon" title="全部折叠" @click="collapseAll()">
-              <use xlink:href="svg/icon.svg#collapse"></use>
-            </svg>
-
-            <svg class="icon" title="清空" @click="clearAll()">
-              <use xlink:href="svg/icon.svg#clear"></use>
-            </svg>
+            <a class="hint--top"  data-hint="清空">
+              <svg class="icon" @click="clearAll()">
+                <use xlink:href="svg/icon.svg#clear"></use>
+              </svg>
+            </a>
 
           </div>
           <div class="right-main">
