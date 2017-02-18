@@ -1,11 +1,6 @@
 # jsonon
 A json online viewer and formatter.
 
-## Start
-`app` is the foled which include all site files that needed to run. you should run a server  (nginx or just run a simple python ` python -m SimpleHTTPServer 3000`) and point to `app`.
-
-If you just open file `app/index.html`, you will lost the icons.
-
 
 ## Featrue
 - format the json string into  well looking.
