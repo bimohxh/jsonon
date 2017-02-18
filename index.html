@@ -42,6 +42,18 @@
                 <use xlink:href="svg/icon.svg#database"></use>
               </svg>
             </a>
+
+            <a class="hint--top"  data-hint="美化">
+              <svg class="icon" @click="beauty()">
+                <use xlink:href="svg/icon.svg#beauty"></use>
+              </svg>
+            </a>
+
+            <a class="hint--top"  data-hint="清空">
+              <svg class="icon" @click="clearAll()">
+                <use xlink:href="svg/icon.svg#clear"></use>
+              </svg>
+            </a>
             
             <a class="hint--top"  data-hint="全部展开">
               <svg class="icon"  @click="expandAll()">
@@ -55,11 +67,9 @@
               </svg>
            </a>
 
-            <a class="hint--top"  data-hint="清空">
-              <svg class="icon" @click="clearAll()">
-                <use xlink:href="svg/icon.svg#clear"></use>
-              </svg>
-            </a>
+            
+
+            
 
           </div>
           <div class="right-main">

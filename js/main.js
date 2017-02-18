@@ -131,20 +131,26 @@
 
       // 压缩
       compress: function () {
-        if (App.view == 'error') {
-          return
-        }
-        if(App.view == 'compress') {
-          App.view = 'code'
-        } else {
-          App.view = 'compress'
-          App.compressStr = Parse.compress(App.jsoncon)
-        }
+        // if (App.view === 'error') {
+        //   return
+        // }
+        // if(App.view == 'compress') {
+        //   App.view = 'code'
+        // } else {
+        //   App.view = 'compress'
+        //   App.compressStr = Parse.compress(App.jsoncon)
+        // }
+        App.jsoncon = Parse.compress(App.jsoncon)
       },
 
       // 清空
       clearAll: function () {
         App.jsoncon = ''
+      },
+
+      // 美化
+      beauty: function () {
+        App.jsoncon = JSON.stringify(JSON.parse(App.jsoncon), '', 4)
       }
     },
     watch: {
