@@ -17,33 +17,28 @@ If you just open file `app/index.html`, you will lost the icons.
 - identify link tags to `<a>...</a>` .
 
 
-## deploy on oss
-sometime we want to deploy the app on a oss static server,  we offer a tool to deploy site to qiniu oss.
+## develop and deploy
+Some resources such as font and svg must be run at a server. I recommand to use [webon](https://github.com/bimohxh/webon)
 
-### initial node environment
+### install webon
+[webon](https://github.com/bimohxh/webon) is help to develop and deploy a static site.
 run
 ```
-npm install
+npm install webon -g
 ```
 
-### config qiniu 
-Create a  file `config/local_env.json` like :
+### configuration
+You need to do some configuration with `webon init`
 
+### development
+Just run 
 ```
-{
-  "qiniu": {
-    "accessKey": "....",
-    "secretKey": "....",,
-    "bucket": "....",,
-    "origin": "...."
-  }
-}
+webon s
 ```
 
-
-### run  command
+### deploy
 ```
-npm run deploy
+webon deploy
 ```
 
 
