@@ -8,3 +8,4 @@ npm-debug.log
 dist
 doc
 config/local_env.json
+*.config.json
