@@ -105,8 +105,10 @@
   var App = new Vue({
     el: '#app',
     data: {
+      baseview: 'formater',
       view: 'code',
       jsoncon: initJson,
+      newjsoncon: '新 JSON 字符串',
       jsonhtml: JSON.parse(initJson),
       compressStr: '',
       error: {}
@@ -131,16 +133,24 @@
 
       // 压缩
       compress: function () {
-        // if (App.view === 'error') {
-        //   return
-        // }
-        // if(App.view == 'compress') {
-        //   App.view = 'code'
-        // } else {
-        //   App.view = 'compress'
-        //   App.compressStr = Parse.compress(App.jsoncon)
-        // }
         App.jsoncon = Parse.compress(App.jsoncon)
+      },
+
+      // diff
+      diffTwo: function () {
+        var base = difflib.stringAsLines(JSON.stringify(JSON.parse(App.jsoncon), '', 4))
+        var newtxt = difflib.stringAsLines(JSON.stringify(JSON.parse(App.newjsoncon), '', 4))
+        var sm = new difflib.SequenceMatcher(base, newtxt)
+        var opcodes = sm.get_opcodes()
+        $('#diffoutput').empty().append(diffview.buildView({
+          baseTextLines: base,
+          newTextLines: newtxt,
+          opcodes: opcodes,
+          baseTextName: "原始JSON",
+          newTextName: "新JSON",
+          contextSize: 2,
+          viewType: 0
+        }))
       },
 
       // 清空
@@ -151,10 +161,18 @@
       // 美化
       beauty: function () {
         App.jsoncon = JSON.stringify(JSON.parse(App.jsoncon), '', 4)
+      },
+
+      // 回到格式化视图
+      baseViewToFormater: function () {
+        App.baseview = 'formater'
       }
     },
     watch: {
       jsoncon: function () {
+        if (App.baseview === 'diff') {
+          return
+        }
         try {
           if(this.jsoncon.trim() == '') {
             App.view = 'empty'

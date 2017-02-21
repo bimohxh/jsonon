@@ -6,6 +6,7 @@
     <meta name="keywords" content="json,json在线解析,json格式化,json格式验证,json数组"/>
     <meta name="description" content="一款简洁优雅的在线json解析器，可能是目前最好用的json在线查看工具"/>
     <link href="css/hint.min.css" rel="stylesheet">
+    <link href="css/diffview.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
   </head>
 
@@ -21,15 +22,17 @@
 
         <div class="top-right">
           <a href="https://github.com/bimohxh/jsonon" target="_blank">
-            <svg class="icon">
+          GiHub
+            <!--<svg class="icon">
               <use xlink:href="svg/icon.svg#github"></use>
-            </svg>
+            </svg>-->
           </a>
         </div>
       </div>
       
-      <div class="side-left">
-        <textarea  v-model="jsoncon" id="jsontxt"></textarea>
+      <div :class="'side-left side-view-' + baseview">
+        <textarea  v-model="jsoncon"></textarea>
+        <textarea  v-model="newjsoncon"></textarea>
       </div>
 
       <div class="splitx" ></div>
@@ -37,42 +40,65 @@
       <div class="side-right">
         <div class="right-inner">
           <div class="right-bar">
-            <a class="hint--top"  data-hint="压缩">
-              <svg  @click="compress()" v-bind:class="'icon  active-' + (view == 'compress')" >
-                <use xlink:href="svg/icon.svg#database"></use>
-              </svg>
-            </a>
+            <template  v-if="baseview == 'formater'">
+              <a class="hint--top"  data-hint="压缩">
+                <svg  @click="compress()" v-bind:class="'icon  active-' + (view == 'compress')" >
+                  <use xlink:href="svg/icon.svg#database"></use>
+                </svg>
+              </a>
 
-            <a class="hint--top"  data-hint="美化">
-              <svg class="icon" @click="beauty()">
-                <use xlink:href="svg/icon.svg#beauty"></use>
-              </svg>
-            </a>
+              <a class="hint--top"  data-hint="美化">
+                <svg class="icon" @click="beauty()">
+                  <use xlink:href="svg/icon.svg#beauty"></use>
+                </svg>
+              </a>
 
-            <a class="hint--top"  data-hint="清空">
-              <svg class="icon" @click="clearAll()">
-                <use xlink:href="svg/icon.svg#clear"></use>
-              </svg>
-            </a>
-            
-            <a class="hint--top"  data-hint="全部展开">
-              <svg class="icon"  @click="expandAll()">
-                <use xlink:href="svg/icon.svg#expand"></use>
-              </svg>
-            </a>
+              <a class="hint--top"  data-hint="清空">
+                <svg class="icon" @click="clearAll()">
+                  <use xlink:href="svg/icon.svg#clear"></use>
+                </svg>
+              </a>
 
-            <a class="hint--top"  data-hint="全部折叠">
-              <svg class="icon"  @click="collapseAll()">
-                <use xlink:href="svg/icon.svg#collapse"></use>
-              </svg>
-           </a>
+              
 
-            
+              <a class="hint--top"  data-hint="全部展开">
+                <svg class="icon"  @click="expandAll()">
+                  <use xlink:href="svg/icon.svg#expand"></use>
+                </svg>
+              </a>
 
-            
+              <a class="hint--top"  data-hint="全部折叠">
+                <svg class="icon"  @click="collapseAll()">
+                  <use xlink:href="svg/icon.svg#collapse"></use>
+                </svg>
+              </a>
+
+               <a class="hint--left pull-right"  data-hint="Diff">
+                <svg class="icon" @click="baseview = 'diff'">
+                  <use xlink:href="svg/icon.svg#diff"></use>
+                </svg>
+               </a>
+            </template>
+
+            <template  v-if="baseview == 'diff'">
+              <a class="hint--top"  data-hint="Diff">
+                <svg class="icon" @click="diffTwo()">
+                  <use xlink:href="svg/icon.svg#diff"></use>
+                </svg>
+              </a>
+
+              <a class="hint--left pull-right"  data-hint="格式化视图">
+                <svg class="icon" @click="baseViewToFormater()">
+                  <use xlink:href="svg/icon.svg#tree"></use>
+                </svg>
+              </a>
+
+            </template>
 
           </div>
-          <div class="right-main">
+
+          <!--格式化视图-->
+          <div class="right-main" v-show="baseview == 'formater'">
 
             <!--正常JSON格式化视图-->
             <div class="view-code"  v-show="view == 'code'">
@@ -91,6 +117,11 @@
             <!--压缩视图-->
             <textarea v-show="view == 'compress'">{{compressStr}}</textarea>
             
+          </div>
+
+          <!--diff视图-->
+          <div id="diffoutput" v-show="baseview == 'diff'">
+
           </div>
         </div>
       </div>
@@ -185,6 +216,8 @@
     <script src="js/jsonlint.js"></script>
     <script src="js/parse.js"></script>
     <script src="js/editor.js"></script>
+    <script src="js/diffview.js"></script>
+	  <script src="js/difflib.js"></script>
     <script src="js/main.js"></script>
     
     <!--访问统计  请换成自己的-->
