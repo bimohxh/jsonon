@@ -31,8 +31,15 @@
       </div>
       
       <div :class="'side-left side-view-' + baseview">
-        <textarea  v-model="jsoncon"></textarea>
-        <textarea  v-model="newjsoncon"></textarea>
+        <div class="left-panel">
+          <textarea  v-model="jsoncon"></textarea>  
+          <div class="label" v-show="baseview == 'diff'">原 JSON</div>       
+        </div>
+        <div  class="left-panel"  v-show="baseview == 'diff'">
+          <textarea  v-model="newjsoncon"></textarea>  
+          <div class="label">新 JSON</div>       
+        </div>
+        
       </div>
 
       <div class="splitx" ></div>
@@ -74,7 +81,7 @@
               </a>
 
                <a class="hint--left pull-right"  data-hint="Diff">
-                <svg class="icon" @click="baseview = 'diff'">
+                <svg class="icon" @click="baseViewToDiff()">
                   <use xlink:href="svg/icon.svg#diff"></use>
                 </svg>
                </a>
@@ -98,7 +105,7 @@
           </div>
 
           <!--格式化视图-->
-          <div class="right-main" v-show="baseview == 'formater'">
+          <div class="right-main" v-show="baseview == 'formater' && view != 'error'">
 
             <!--正常JSON格式化视图-->
             <div class="view-code"  v-show="view == 'code'">
@@ -107,20 +114,21 @@
 
             <!--空视图-->
             <div class="view-code"  v-show="view == 'empty'">
-            </div>
-
-            <!--格式化错误视图-->
-            <div class="view-error" v-show="view == 'error'">
-              <pre v-cloak>{{error.msg}}</pre>
-            </div>
+            </div> 
 
             <!--压缩视图-->
             <textarea v-show="view == 'compress'">{{compressStr}}</textarea>
             
           </div>
 
+
+          <!--格式化错误视图-->
+          <div class="view-error" v-show="view == 'error'">
+            <pre v-cloak>{{error.msg}}</pre>
+          </div>
+
           <!--diff视图-->
-          <div id="diffoutput" v-show="baseview == 'diff'">
+          <div id="diffoutput" v-show="baseview == 'diff' && view != 'error'">
 
           </div>
         </div>

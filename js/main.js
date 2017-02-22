@@ -40,7 +40,6 @@
         target.siblings('svg').show()
         target.hide().parent().siblings('.expand-view').hide()
         target.parent().siblings('.fold-view').show()
-        
       }
       // 展开
       Vue.prototype.expand = function ($event) {
@@ -108,7 +107,7 @@
       baseview: 'formater',
       view: 'code',
       jsoncon: initJson,
-      newjsoncon: '新 JSON 字符串',
+      newjsoncon: '{"name": "Json on"}',
       jsonhtml: JSON.parse(initJson),
       compressStr: '',
       error: {}
@@ -138,16 +137,39 @@
 
       // diff
       diffTwo: function () {
-        var base = difflib.stringAsLines(JSON.stringify(JSON.parse(App.jsoncon), '', 4))
-        var newtxt = difflib.stringAsLines(JSON.stringify(JSON.parse(App.newjsoncon), '', 4))
+        let oldJSON = {}
+        let newJSON = {}
+        App.view = 'code'
+        try {
+          oldJSON = jsonlint.parse(App.jsoncon)
+        } catch (ex) {
+          App.view = 'error'
+          App.error = {
+            msg: '原 JSON 解析错误\r\n' + ex.message
+          }
+          return
+        }
+
+        try {
+          newJSON = jsonlint.parse(App.newjsoncon)
+        } catch (ex) {
+          App.view = 'error'
+          App.error = {
+            msg: '新 JSON 解析错误\r\n' + ex.message
+          }
+          return
+        }
+
+        var base = difflib.stringAsLines(JSON.stringify(oldJSON, '', 4))
+        var newtxt = difflib.stringAsLines(JSON.stringify(newJSON, '', 4))
         var sm = new difflib.SequenceMatcher(base, newtxt)
         var opcodes = sm.get_opcodes()
         $('#diffoutput').empty().append(diffview.buildView({
           baseTextLines: base,
           newTextLines: newtxt,
           opcodes: opcodes,
-          baseTextName: "原始JSON",
-          newTextName: "新JSON",
+          baseTextName: '原 JSON',
+          newTextName: '新 JSON',
           contextSize: 2,
           viewType: 0
         }))
@@ -163,30 +185,40 @@
         App.jsoncon = JSON.stringify(JSON.parse(App.jsoncon), '', 4)
       },
 
+      baseViewToDiff: function () {
+        App.baseview = 'diff'
+        App.diffTwo()
+      },
+
       // 回到格式化视图
       baseViewToFormater: function () {
         App.baseview = 'formater'
-      }
-    },
-    watch: {
-      jsoncon: function () {
+        App.view = 'code'
+        App.showJsonView()
+      },
+      // 根据json内容变化格式化视图
+      showJsonView: function () {
         if (App.baseview === 'diff') {
           return
         }
         try {
-          if(this.jsoncon.trim() == '') {
+          if (this.jsoncon.trim() === '') {
             App.view = 'empty'
           } else {
             App.view = 'code'
-            App.jsonhtml = jsonlint.parse(this.jsoncon)   
+            App.jsonhtml = jsonlint.parse(this.jsoncon)
           }
-          
         } catch (ex) {
           App.view = 'error'
           App.error = {
             msg: ex.message
           }
         }
+      }
+    },
+    watch: {
+      jsoncon: function () {
+        App.showJsonView()
       }
     }
   })

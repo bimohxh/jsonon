@@ -130,6 +130,11 @@ a:active svg, a:hover svg{
   
 }
 
+.left-panel {
+  height: 100%;
+  position: relative
+}
+
 
 textarea {
   display: block;
@@ -143,12 +148,12 @@ textarea {
   line-height: 1.42857143;
 }
 
-.side-view-diff textarea {
+.side-view-diff .left-panel {
   height: 50%;
   border-top: #DDD 1px solid;
 }
 
-.side-view-diff textarea:first-child {
+.side-view-diff .left-panel:first-child {
   border: 0
 }
 
@@ -198,6 +203,8 @@ textarea {
   color: #f1592a;
   font-weight: bold;
   line-height: 25px;
+  height: 100%;
+  overflow-y: hidden
 }
 
 .right-bar {
@@ -311,8 +318,11 @@ table.diff thead {
 }
 
 table.diff thead th.texttitle {
-  text-align: center
+  text-align: center;
+  line-height: 25px;
 }
+
+
 
 .hint--top {
   display: inline-block
@@ -320,7 +330,7 @@ table.diff thead th.texttitle {
 
 
 
-.panel{
+.label{
     border: solid 1px #F1F1F1;
     background: #fff;
     display: inline-block;
