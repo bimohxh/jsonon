@@ -216,11 +216,31 @@ textarea {
   padding-right: 10px;
 }
 
-.right-bar > a {
-  margin: 10px 0;
-  margin-left: 20px;
+.right-bar > a, .right-bar > div {
+  padding: 10px;
+  margin: 0 ;
   cursor: pointer;
-  font-family: '微软雅黑'
+  font-family: '微软雅黑';
+  display: inline-block;
+  position: relative;
+}
+
+.right-bar > div {
+  cursor: default
+}
+
+.pop {
+  display: none;
+  position: absolute;
+  right: 0;  
+  top: 40px; 
+  border: #DDD 1px solid;
+  border-bottom: 0;
+  border-top: 0;
+}
+
+.right-bar > div:hover .pop, .right-bar .pop:hover {
+  display: block;
 }
 
 
@@ -346,4 +366,87 @@ table.diff thead th.texttitle {
     border-radius: 1px;
     z-index: 30;
     opacity: 0.5;
+}
+
+
+.historys {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  
+  background-color: #FFF;
+}
+
+
+.historys li {
+  display: block;
+  padding: 10px;
+  border-bottom: #DDD 1px solid;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  padding-right: 20px;
+  position: relative
+}
+
+.historys svg {
+  position: absolute;
+  display: inline-block;
+  cursor: pointer;
+  right: 5px;
+  width: 15px;
+  height: 15px;
+}
+
+
+.pop-save {
+  padding: 10px;
+  width: 250px;
+  border-bottom: #DDD 1px solid;
+}
+
+.pop-save input {
+  line-height: 20px;
+  width: 100%;
+  border: 0;
+  outline: none
+}
+
+/*提示框*/
+.alert {
+  position: fixed;
+  top: -30px;
+  text-align: center;
+  width: 100%
+}
+
+.alert-inner {
+  display: inline-block;
+  padding: 8px 15px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+}
+
+.alert-success {
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+  color: #3c763d;
+}
+
+.alert-danger {
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  color: #a94442;
+}
+
+.alert-warning {
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+  color: #8a6d3b;
+}
+
+.alert-info {
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+  color: #31708f;
 }

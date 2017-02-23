@@ -80,11 +80,40 @@
                 </svg>
               </a>
 
-               <a class="hint--left pull-right"  data-hint="Diff">
+              <a class="hint--left pull-right"  data-hint="Diff">
                 <svg class="icon" @click="baseViewToDiff()">
                   <use xlink:href="svg/icon.svg#diff"></use>
                 </svg>
                </a>
+
+              <div class="pull-right" v-show="historys.length > 0">
+                <a class="hint--top"  data-hint="历史保存" href="javascript:void(0)">
+                  <svg class="icon">
+                    <use xlink:href="svg/icon.svg#record"></use>
+                  </svg>
+                </a>
+
+                <ul class="historys pop">
+                  <li v-for="(his, index) in historys">
+                    <a href="javascript:void(0)" @click="restore(his)"> {{his.name}}</a>
+
+                    <svg class="icon" @click="remove(his, index)">
+                      <use xlink:href="svg/icon.svg#trash"></use>
+                    </svg>
+                  </li>
+                </ul>
+               </div>
+
+              <div class="pull-right">
+               <a class="hint--top"  data-hint="保存" href="javascript:void(0)">
+                <svg class="icon" @click="save()">
+                  <use xlink:href="svg/icon.svg#save"></use>
+                </svg>
+               </a>
+               <div class="pop-save pop">
+                  <input type="text" placeholder="请输入辨识名称" v-model="history.name"/>
+               </div>
+              </div> 
             </template>
 
             <template  v-if="baseview == 'diff'">
@@ -133,7 +162,6 @@
           </div>
         </div>
       </div>
-
     </div>    
 
     <!--用于移动的时候遮住文本域 避免被选中-->
@@ -226,6 +254,8 @@
     <script src="js/editor.js"></script>
     <script src="js/diffview.js"></script>
 	  <script src="js/difflib.js"></script>
+    <script src="js/localforage.min.js"></script>
+    <script src="js/helper.js"></script>
     <script src="js/main.js"></script>
     
     <!--访问统计  请换成自己的-->

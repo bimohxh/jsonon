@@ -110,7 +110,9 @@
       newjsoncon: '{"name": "Json on"}',
       jsonhtml: JSON.parse(initJson),
       compressStr: '',
-      error: {}
+      error: {},
+      historys: [],
+      history: {name: ''}
     },
     methods: {
 
@@ -137,8 +139,8 @@
 
       // diff
       diffTwo: function () {
-        let oldJSON = {}
-        let newJSON = {}
+        var oldJSON = {}
+        var newJSON = {}
         App.view = 'code'
         try {
           oldJSON = jsonlint.parse(App.jsoncon)
@@ -196,6 +198,7 @@
         App.view = 'code'
         App.showJsonView()
       },
+
       // 根据json内容变化格式化视图
       showJsonView: function () {
         if (App.baseview === 'diff') {
@@ -214,12 +217,55 @@
             msg: ex.message
           }
         }
+      },
+
+      // 保存当前的JSON
+      save: function () {
+        if (App.history.name.trim() === '') {
+          Helper.alert('名称不能为空！', 'danger')
+          return
+        }
+        var val = {
+          name: App.history.name,
+          data: App.jsoncon
+        }
+        var key = String(Date.now())
+        localforage.setItem(key, val, function (err, value) {
+          Helper.alert('保存成功！', 'success')
+          val.key = key
+          App.historys.push(val)
+        })
+      },
+
+      // 删除已保存的
+      remove: function (item, index) {
+        localforage.removeItem(item.key, function () {
+          App.historys.splice(index, 1)
+        })
+      },
+
+      // 根据历史恢复数据
+      restore: function (item) {
+        localforage.getItem(item.key, function (err, value) {
+          App.jsoncon = item.data
+        })
+      },
+
+      // 获取所有保存的json
+      listHistory: function () {
+        localforage.iterate(function (value, key, iterationNumber) {
+          value.key = key
+          App.historys.push(value)
+        })
       }
     },
     watch: {
       jsoncon: function () {
         App.showJsonView()
       }
+    },
+    created () {
+      this.listHistory()
     }
   })
 })()

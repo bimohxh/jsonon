@@ -12,7 +12,9 @@ A json online viewer and formatter.
 - fold and expand the object and array value.
 - fold all and expand all.
 - identify link tags to `<a>...</a>` .
-- Diff two json, find the different between them.
+- diff two json, find the different between them.
+- save current json data to local.
+- all saved json lists view and fill data to current view and remove it.
 
 
 ## develop and deploy
