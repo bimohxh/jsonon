@@ -112,7 +112,8 @@
       compressStr: '',
       error: {},
       historys: [],
-      history: {name: ''}
+      history: {name: ''},
+      isSaveShow: false
     },
     methods: {
 
@@ -219,6 +220,7 @@
         }
       },
 
+
       // 保存当前的JSON
       save: function () {
         if (App.history.name.trim() === '') {
@@ -232,6 +234,7 @@
         var key = String(Date.now())
         localforage.setItem(key, val, function (err, value) {
           Helper.alert('保存成功！', 'success')
+          App.isSaveShow = false
           val.key = key
           App.historys.push(val)
         })

@@ -92,9 +92,9 @@
 
                 <ul class="historys pop">
                   <li v-for="(his, index) in historys">
-                    <a href="javascript:void(0)" @click="restore(his)"  @click="remove(his, index)"> {{his.name}}</a>
+                    <a href="javascript:void(0)" @click="restore(his)"  > {{his.name}}</a>
 
-                    <svg class="icon">
+                    <svg class="icon" @click="remove(his, index)">
                       <use xlink:href="svg/icon.svg#trash"></use>
                     </svg>
                   </li>
@@ -102,14 +102,11 @@
                </div>
 
               <div class="pull-right">
-               <a class="hint--top"  data-hint="保存" href="javascript:void(0)"  @click="save()">
+               <a class="hint--top"  data-hint="保存" href="javascript:void(0)" @click="isSaveShow = true">
                 <svg class="icon">
                   <use xlink:href="svg/icon.svg#save"></use>
                 </svg>
                </a>
-               <div class="pop-save pop">
-                  <input type="text" placeholder="请输入辨识名称" v-model="history.name"/>
-               </div>
               </div> 
             </template>
 
@@ -159,6 +156,17 @@
           </div>
         </div>
       </div>
+
+      <!--弹出保存框-->
+      <div class="save-box" v-show="isSaveShow">
+        <svg class="icon close-icon" @click="isSaveShow = false">
+          <use xlink:href="svg/icon.svg#close"></use>
+        </svg>
+
+        <input type="text" placeholder="请输入辨识名称" v-model="history.name" />
+        <button   @click="save()" >保存</button>
+      </div>
+      
     </div>    
 
     <!--用于移动的时候遮住文本域 避免被选中-->
@@ -239,6 +247,9 @@
         </svg>
       </span>
     </script>
+
+    
+
 
     <script src="js/vue.min.js"></script>
     <script src="js/jquery.js"></script>
