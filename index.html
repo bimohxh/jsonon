@@ -65,6 +65,12 @@
                 </svg>
               </a>
 
+              <a class="hint--top"  data-hint="导出文本文件"   @click="isExportTxtShow = true">
+                <svg class="icon">
+                  <use xlink:href="svg/icon.svg#export-txt"></use>
+                </svg>
+              </a>
+
               <a class="hint--top"  data-hint="全部展开"  @click="expandAll()">
                 <svg class="icon" >
                   <use xlink:href="svg/icon.svg#expand"></use>
@@ -166,6 +172,18 @@
         <input type="text" placeholder="请输入辨识名称" v-model="history.name" />
         <button   @click="save()" >保存</button>
       </div>
+
+      <!--弹出下载文本框-->
+      <div class="save-box" v-show="isExportTxtShow">
+        <svg class="icon close-icon" @click="isExportTxtShow = false">
+          <use xlink:href="svg/icon.svg#close"></use>
+        </svg>
+
+        <label>.txt</label>
+
+        <input type="text" placeholder="请输入辨识名称" v-model="exTxt.name" />
+        <button @click="exportTxt()">下载</button>
+      </div>
       
     </div>    
 
@@ -259,6 +277,7 @@
     <script src="js/diffview.js"></script>
 	  <script src="js/difflib.js"></script>
     <script src="js/localforage.min.js"></script>
+    <script src="js/FileSaver.js"></script>
     <script src="js/helper.js"></script>
     <script src="js/main.js"></script>
     

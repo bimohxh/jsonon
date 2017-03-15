@@ -11,6 +11,10 @@ html,body {
   
 }
 
+[v-show] {
+  display: none
+}
+
 .pull-right {
   float: right
 }
@@ -284,6 +288,12 @@ textarea {
   top: 5px;
   cursor: pointer;
   fill: #DDD
+}
+.save-box label {
+  position: absolute;
+  color: #DDD;
+  right: 122px;
+  top: 39px;
 }
 
 

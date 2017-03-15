@@ -113,7 +113,11 @@
       error: {},
       historys: [],
       history: {name: ''},
-      isSaveShow: false
+      isSaveShow: false,
+      isExportTxtShow: false,
+      exTxt: {
+        name: 'JSONON'
+      }
     },
     methods: {
 
@@ -260,6 +264,12 @@
           value.key = key
           App.historys.push(value)
         })
+      },
+
+      // 导出文本
+      exportTxt: function () {
+        saveTextAs(App.jsoncon, App.exTxt.name + '.txt')
+        App.isExportTxtShow = false
       }
     },
     watch: {
