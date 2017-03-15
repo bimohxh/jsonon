@@ -39,7 +39,6 @@
           <textarea  v-model="newjsoncon"></textarea>  
           <div class="label">新 JSON</div>       
         </div>
-        
       </div>
 
       <div class="splitx" ></div>
@@ -48,40 +47,38 @@
         <div class="right-inner">
           <div class="right-bar">
             <template  v-if="baseview == 'formater'">
-              <a class="hint--top"  data-hint="压缩">
-                <svg  @click="compress()" v-bind:class="'icon  active-' + (view == 'compress')" >
+              <a @click="compress()" class="hint--top"  data-hint="压缩">
+                <svg  v-bind:class="'icon  active-' + (view == 'compress')" >
                   <use xlink:href="svg/icon.svg#database"></use>
                 </svg>
               </a>
 
-              <a class="hint--top"  data-hint="美化">
-                <svg class="icon" @click="beauty()">
+              <a class="hint--top"  data-hint="美化"  @click="beauty()">
+                <svg class="icon">
                   <use xlink:href="svg/icon.svg#beauty"></use>
                 </svg>
               </a>
 
-              <a class="hint--top"  data-hint="清空">
-                <svg class="icon" @click="clearAll()">
+              <a class="hint--top"  data-hint="清空"  @click="clearAll()">
+                <svg class="icon">
                   <use xlink:href="svg/icon.svg#clear"></use>
                 </svg>
               </a>
 
-              
-
-              <a class="hint--top"  data-hint="全部展开">
-                <svg class="icon"  @click="expandAll()">
+              <a class="hint--top"  data-hint="全部展开"  @click="expandAll()">
+                <svg class="icon" >
                   <use xlink:href="svg/icon.svg#expand"></use>
                 </svg>
               </a>
 
-              <a class="hint--top"  data-hint="全部折叠">
-                <svg class="icon"  @click="collapseAll()">
+              <a class="hint--top"  data-hint="全部折叠" @click="collapseAll()">
+                <svg class="icon"  >
                   <use xlink:href="svg/icon.svg#collapse"></use>
                 </svg>
               </a>
 
-              <a class="hint--left pull-right"  data-hint="Diff">
-                <svg class="icon" @click="baseViewToDiff()">
+              <a class="hint--left pull-right"  data-hint="Diff"  @click="baseViewToDiff()">
+                <svg class="icon">
                   <use xlink:href="svg/icon.svg#diff"></use>
                 </svg>
                </a>
@@ -95,9 +92,9 @@
 
                 <ul class="historys pop">
                   <li v-for="(his, index) in historys">
-                    <a href="javascript:void(0)" @click="restore(his)"> {{his.name}}</a>
+                    <a href="javascript:void(0)" @click="restore(his)"  @click="remove(his, index)"> {{his.name}}</a>
 
-                    <svg class="icon" @click="remove(his, index)">
+                    <svg class="icon">
                       <use xlink:href="svg/icon.svg#trash"></use>
                     </svg>
                   </li>
@@ -105,8 +102,8 @@
                </div>
 
               <div class="pull-right">
-               <a class="hint--top"  data-hint="保存" href="javascript:void(0)">
-                <svg class="icon" @click="save()">
+               <a class="hint--top"  data-hint="保存" href="javascript:void(0)"  @click="save()">
+                <svg class="icon">
                   <use xlink:href="svg/icon.svg#save"></use>
                 </svg>
                </a>
@@ -117,14 +114,14 @@
             </template>
 
             <template  v-if="baseview == 'diff'">
-              <a class="hint--top"  data-hint="Diff">
-                <svg class="icon" @click="diffTwo()">
+              <a class="hint--top"  data-hint="Diff"  @click="diffTwo()">
+                <svg class="icon">
                   <use xlink:href="svg/icon.svg#diff"></use>
                 </svg>
               </a>
 
-              <a class="hint--left pull-right"  data-hint="格式化视图">
-                <svg class="icon" @click="baseViewToFormater()">
+              <a class="hint--left pull-right"  data-hint="格式化视图"  @click="baseViewToFormater()">
+                <svg class="icon">
                   <use xlink:href="svg/icon.svg#tree"></use>
                 </svg>
               </a>
@@ -174,7 +171,6 @@
         <vue-val  :val="jsondata" :isend="isend"></vue-val>
       </ul>
     </script>
-
 
     <!--内层每个键值对-->
     <script type="text/x-template" id="item-template">
@@ -230,7 +226,6 @@
         </template>
       </div>
     </script>
-
     
     <!--展开 折叠的 UI 组件-->
     <script type="text/x-template" id="expand-template">
@@ -244,8 +239,6 @@
         </svg>
       </span>
     </script>
-
-    
 
     <script src="js/vue.min.js"></script>
     <script src="js/jquery.js"></script>
