@@ -15,6 +15,7 @@ A json online viewer and formatter.
 - diff two json, find the different between them.
 - save current json data to local.
 - all saved json lists view and fill data to current view and remove it.
+- offline visit
 
 
 ## develop and deploy

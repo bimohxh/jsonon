@@ -1,0 +1,24 @@
+CACHE MANIFEST
+#v1 - 2013-09-09
+
+CACHE:
+index.html
+favicon.ico
+css/main.css
+css/diffview.css
+css/hint.min.css
+js/difflib.js
+js/diffview.js
+js/editor.js
+js/FileSaver.js
+js/helper.js
+js/jquery.js
+js/jsonlint.js
+js/localforage.min.js
+js/main.js
+js/parse.js
+js/vue.min.js
+svg/icon.svg
+
+
+NETWORK: *
