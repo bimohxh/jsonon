@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html manifest="/cache.manifest">
+<html>
   <head>
     <title>Json在线解析</title>
     <meta charset="utf-8" />
     <meta name="keywords" content="json,json在线解析,json格式化,json格式验证,json数组"/>
     <meta name="description" content="一款简洁优雅的在线json解析器，可能是目前最好用的json在线查看工具"/>
     <link href="css/hint.min.css" rel="stylesheet">
-    <link href="css/diffview.css" rel="stylesheet">
+    <!-- <link href="css/diffview.css" rel="stylesheet"> -->
     <link href="css/main.css" rel="stylesheet">
   </head>
 
   <body>
     <div id="app">
       <div class="side-top"> 
-        <a class="logo" href="/">
+        <a class="logo"   href="/">
           <span class="on">Json</span><span >on</span>
         </a>  
         <span class="slogan">
@@ -46,56 +46,56 @@
       <div class="side-right">
         <div class="right-inner">
           <div class="right-bar">
-            <template  v-if="baseview == 'formater'">
-              <a @click="compress()" class="hint--top"  data-hint="压缩">
+            <div class="pull-left">
+              <a href="javascript:void(0)" @click="compress()" class="hint--top"  data-hint="压缩">
                 <svg  v-bind:class="'icon  active-' + (view == 'compress')" >
                   <use xlink:href="svg/icon.svg#database"></use>
                 </svg>
               </a>
 
-              <a class="hint--top"  data-hint="美化"  @click="beauty()">
+              <a href="javascript:void(0)" class="hint--top"  data-hint="美化"  @click="beauty()">
                 <svg class="icon">
                   <use xlink:href="svg/icon.svg#beauty"></use>
                 </svg>
               </a>
 
-              <a class="hint--top"  data-hint="清空"  @click="clearAll()">
+              <a href="javascript:void(0)" class="hint--top"  data-hint="清空"  @click="clearAll()">
                 <svg class="icon">
                   <use xlink:href="svg/icon.svg#clear"></use>
                 </svg>
               </a>
 
-              <a class="hint--top"  data-hint="导出文本文件"   @click="isExportTxtShow = true">
+              <a href="javascript:void(0)" class="hint--top"  data-hint="导出文本文件"   @click="isExportTxtShow = true">
                 <svg class="icon">
                   <use xlink:href="svg/icon.svg#export-txt"></use>
                 </svg>
               </a>
 
-              <a class="hint--top"  data-hint="全部展开"  @click="expandAll()">
+              <a href="javascript:void(0)" class="hint--top"  data-hint="全部展开"  @click="expandAll()">
                 <svg class="icon" >
                   <use xlink:href="svg/icon.svg#expand"></use>
                 </svg>
               </a>
 
-              <a class="hint--top"  data-hint="全部折叠" @click="collapseAll()">
+              <a  href="javascript:void(0)" class="hint--top"  data-hint="全部折叠" @click="collapseAll()">
                 <svg class="icon"  >
                   <use xlink:href="svg/icon.svg#collapse"></use>
                 </svg>
               </a>
-
-              <a class="hint--left pull-right"  data-hint="Diff"  @click="baseViewToDiff()">
+            </div>  
+            <div class="pull-right">
+              <a class="hint--top save-tool copy-btn"  data-hint="分享" href="javascript:void(0)" @click="share" data-clipboard-target="#share-input">
                 <svg class="icon">
-                  <use xlink:href="svg/icon.svg#diff"></use>
+                  <use xlink:href="svg/icon.svg#share"></use>
                 </svg>
-               </a>
+              </a>
 
-              <div class="pull-right" v-show="historys.length > 0">
+              <span class="pop-btn"  v-show="historys.length > 0">
                 <a class="hint--top"  data-hint="历史保存" href="javascript:void(0)">
                   <svg class="icon">
                     <use xlink:href="svg/icon.svg#record"></use>
                   </svg>
                 </a>
-
                 <ul class="historys pop">
                   <li v-for="(his, index) in historys">
                     <a href="javascript:void(0)" @click="restore(his)"  > {{his.name}}</a>
@@ -105,40 +105,40 @@
                     </svg>
                   </li>
                 </ul>
-               </div>
-
-              <div class="pull-right">
-               <a class="hint--top"  data-hint="保存" href="javascript:void(0)" @click="isSaveShow = true">
-                <svg class="icon">
-                  <use xlink:href="svg/icon.svg#save"></use>
-                </svg>
-               </a>
-              </div> 
-            </template>
-
-            <template  v-if="baseview == 'diff'">
-              <a class="hint--top"  data-hint="Diff"  @click="diffTwo()">
-                <svg class="icon">
-                  <use xlink:href="svg/icon.svg#diff"></use>
-                </svg>
+              </span>    
+              <a class="hint--top save-tool"  data-hint="保存" href="javascript:void(0)" @click="isSaveShow = true">
+              <svg class="icon">
+                <use xlink:href="svg/icon.svg#save"></use>
+              </svg>
               </a>
 
-              <a class="hint--left pull-right"  data-hint="格式化视图"  @click="baseViewToFormater()">
-                <svg class="icon">
-                  <use xlink:href="svg/icon.svg#tree"></use>
-                </svg>
-              </a>
+              <span class="pop-btn">
+                <a class="hint--top"  data-hint="换肤" href="javascript:void(0)" @click="isThemeShow = true">
+                  <svg class="icon">
+                    <use xlink:href="svg/icon.svg#theme"></use>
+                  </svg>
+                </a>
+                <div class="themes pop">
+                  <div :class="'theme-item ' + (index === checkedTheme)" v-for="(theme, index) in themes" @click="switchTheme(index)">
+                    <span class="theme-color" v-for="color in theme" :style="{backgroundColor: color}" ></span>
+                  </div>
+                </div>
+              </span>
+            </div> 
 
-            </template>
-
+            <!-- 用作复制的隐藏文本域 -->
+            <div style="position: absolute; top: -100000px">
+              <input id="share-input" :value="shareUrl(shareKey)">
+            </div>
           </div>
+
 
           <!--格式化视图-->
           <div class="right-main" v-show="baseview == 'formater' && view != 'error'">
 
             <!--正常JSON格式化视图-->
             <div class="view-code"  v-show="view == 'code'">
-              <vue-outer :jsondata="jsonhtml" isend="true"></vue-outer>
+              <vue-outer :jsondata="jsonhtml" isend="true" :theme="theme"></vue-outer>
             </div>
 
             <!--空视图-->
@@ -157,9 +157,10 @@
           </div>
 
           <!--diff视图-->
-          <div id="diffoutput" v-show="baseview == 'diff' && view != 'error'">
+          <!-- <div id="diffoutput" v-show="baseview == 'diff' && view != 'error'">
 
-          </div>
+          </div> -->
+          
         </div>
       </div>
 
@@ -191,17 +192,19 @@
     <div class="widnow-cover">
     </div> 
 
+    
+
     <!--最外层根结构-->
     <script type="text/x-template" id="outer-template">
       <ul class="json-item">
-        <vue-val  :val="jsondata" :isend="isend"></vue-val>
+        <vue-val  :val="jsondata" :isend="isend" :theme="theme"></vue-val>
       </ul>
     </script>
 
     <!--内层每个键值对-->
     <script type="text/x-template" id="item-template">
       <ul class="json-item">
-        <vue-val :field="key" :val="val" :isend="index == objLength(jsondata) - 1" v-for="(val, key, index) in jsondata"></vue-val>
+        <vue-val :field="key" :theme="theme" :val="val" :isend="index == objLength(jsondata) - 1" v-for="(val, key, index) in jsondata"></vue-val>
       </ul>
     </script>
 
@@ -209,10 +212,10 @@
     <script type="text/x-template" id="val-template">
       <div class="keyval">
         <template v-if="!isObjectArr(val)">
-          <span class="key" v-show="field">"{{field}}": </span>
-          <span  v-bind:class="'val val-' + getTyp(val)">
+          <span class="key" v-show="field" v-bind:style="{color: theme.key}">"{{field}}": </span>
+          <span  v-bind:class="'val val-' + getTyp(val)" v-bind:style="{color: theme[getTyp(val)]}">
             <span v-if="!isaLink(val)">{{formatVal(val)}}</span>
-            <a v-if="isaLink(val)" :href="val" target="_blank" class="json-link">{{formatVal(val)}}</a>
+            <a v-if="isaLink(val)" :href="val" target="_blank" class="json-link" :style="{}">{{formatVal(val)}}</a>
             <span v-if="!isend">,</span>
           </span>
         </template>
@@ -220,7 +223,7 @@
 
         <!--key + 展开折叠ICON-->
         <template v-if="isObjectArr(val)">
-          <span class="key" v-show="field">"{{field}}": </span>
+          <span class="key" v-bind:style="{color: theme.key}" v-show="field">"{{field}}": </span>
           <vue-expand></vue-expand>
         </template>
 
@@ -229,7 +232,7 @@
         <template v-if="getTyp(val) == 'Object'">
           <span class="expand-view">
             <span>{</span>
-            <vue-item :jsondata="val"></vue-item>
+            <vue-item :jsondata="val" :theme="theme"></vue-item>
             <div class="brace-end">}<span v-if="!isend">,</span></div>
           </span>  
 
@@ -242,7 +245,7 @@
           <span class="expand-view">
             <span>[</span>
             <span class="val">
-              <vue-outer :jsondata="sub" v-for="(sub, index) in val" :isend="index == val.length - 1"></vue-outer>
+              <vue-outer :jsondata="sub" v-for="(sub, index) in val" :isend="index == val.length - 1" :theme="theme"></vue-outer>
             </span> 
             <div class="brace-end">]<span v-if="!isend">,</span></div>
           </span>  
@@ -274,10 +277,11 @@
     <script src="js/jsonlint.js"></script>
     <script src="js/parse.js"></script>
     <script src="js/editor.js"></script>
-    <script src="js/diffview.js"></script>
-	  <script src="js/difflib.js"></script>
+    <!-- <script src="js/diffview.js"></script> -->
     <script src="js/localforage.min.js"></script>
     <script src="js/FileSaver.js"></script>
+    <script src="js/uuid.js"></script>
+    <script src="js/clipboard.min.js"></script>
     <script src="js/helper.js"></script>
     <script src="js/main.js"></script>
     

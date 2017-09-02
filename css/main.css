@@ -3,6 +3,7 @@ html,body {
   padding: 0; 
   color: #555;
   font-size: 14px;
+  overflow: hidden
 }
 
 * {
@@ -16,9 +17,20 @@ html,body {
 }
 
 .pull-right {
-  float: right
+  float: right;
+  display: flex;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  /* justify-content: center */
 }
 
+.pull-left {
+  display: flex;
+  align-items: center;
+  flex-grow: 1
+  /* justify-content: center */
+}
 
 
 textarea {
@@ -168,6 +180,9 @@ textarea {
   bottom: 0;
   width: 60%;
   padding-left: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center
 }
 
 .right-inner {
@@ -218,10 +233,15 @@ textarea {
   position: absolute;
   top: 0px;
   padding-right: 10px;
+  display: flex;
+  align-items: center;
+  z-index: 100;
+  background-color: #FFF;
 }
 
-.right-bar > a, .right-bar > div {
-  padding: 10px;
+
+.right-bar > a {
+  padding: 0 10px;
   margin: 0 ;
   cursor: pointer;
   font-family: '微软雅黑';
@@ -231,6 +251,33 @@ textarea {
 
 .right-bar > div {
   cursor: default
+}
+
+.share-box {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background-color: #fcffff;
+  top: 0;
+  padding-top: 80px;
+  text-align: center
+}
+
+.sharehis {
+  display: inline-block;
+  background-color: #e1e2d0;
+  box-shadow: 1px 1px 5px #EEE;
+  padding: 5px 10px;
+  margin: 5px 10px
+}
+
+.current-share {
+  background-color: #f28969;
+  padding: 10px;
+  color: #FFF!important;
+  box-shadow: 1px 1px 1px #DDD;
+  display: inline-block;
 }
 
 .pop {
@@ -243,8 +290,40 @@ textarea {
   border-top: 0;
 }
 
-.right-bar > div:hover .pop, .right-bar .pop:hover {
+.pop-btn {
+  display: inline-block;
+  position: relative
+}
+.pop-btn:hover .pop, .pop:hover {
   display: block;
+}
+
+.themes {
+  width: 100px;
+  box-shadow: 1px 1px 1px #DDD;
+  background-color: #FFF;
+  overflow: hidden;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px 0;
+}
+
+
+
+.themes .theme-item {
+  cursor: pointer;
+  padding: 5px 0px;
+  width: 100%;
+  text-align: center;
+}
+.themes .theme-item.true{
+  box-shadow: 1px 0px 10px #aeaeae;
+}
+
+.themes .theme-color {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
 }
 
 
@@ -304,7 +383,7 @@ textarea {
 
 
 .keyval .key {
-  color: #92278f;
+  /* color: #92278f; */
   font-weight: bold;
 }
 
@@ -312,7 +391,7 @@ textarea {
   font-weight: bold;
 }
 
-.keyval .val-String {
+/* .keyval .val-String {
   color: #3ab54a;
 }
 
@@ -326,7 +405,7 @@ textarea {
 
 .keyval .val-Null {
   color: #f34e5c;
-}
+} */
 
 .brace-end {
 }
@@ -393,7 +472,9 @@ table.diff thead th.texttitle {
 
 
 .hint--top {
-  display: inline-block
+  display: inline-block;
+  padding: 10px;
+  position: relative
 }
 
 

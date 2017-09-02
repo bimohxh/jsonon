@@ -1,12 +1,12 @@
 'use strict';
 (function () {
   Vue.component('vue-item', {
-    props: ['jsondata'],
+    props: ['jsondata', 'theme'],
     template: '#item-template'
   })
 
   Vue.component('vue-outer', {
-    props: ['jsondata', 'isend'],
+    props: ['jsondata', 'isend', 'theme'],
     template: '#outer-template'
   })
 
@@ -16,10 +16,9 @@
   })
 
   Vue.component('vue-val', {
-    props: ['field', 'val', 'isend'],
+    props: ['field', 'val', 'isend', 'theme'],
     template: '#val-template'
   })
-
 
   Vue.use({
     install: function (Vue, options) {
@@ -90,7 +89,6 @@
     }
   })
 
-
   var initJson =  '{\n\
       "name": "Json on",\n\
       "description": "一个简洁的在线 JSON 查看器",\n\
@@ -100,7 +98,13 @@
       }\n\
   }'
 
-
+  // 主题 [key, String, Number, Boolean, Null, link-link, link-hover]
+  let themes = [
+    ['#92278f', '#3ab54a', '#25aae2', '#f3934e', '#f34e5c', '#717171', '#3ab54a'],
+    ['rgb(19, 158, 170)', '#cf9f19', '#ec4040', '#7cc500', 'rgb(211, 118, 126)', '#717171', '#3ab54a'],
+    ['#886', '#25aae2', '#e60fc2', '#f43041', 'rgb(180, 83, 244)', '#717171', '#3ab54a'],
+    ['rgb(97, 97, 102)', '#cf4c74', '#20a0d5', '#cd1bc4', '#c1b8b9', '#717171', '#3ab54a']
+  ]
   var App = new Vue({
     el: '#app',
     data: {
@@ -117,7 +121,10 @@
       isExportTxtShow: false,
       exTxt: {
         name: 'JSONON'
-      }
+      },
+      themes: themes,
+      checkedTheme: 0,
+      shareKey: '' // 分享后返回的ID
     },
     methods: {
 
@@ -224,7 +231,6 @@
         }
       },
 
-
       // 保存当前的JSON
       save: function () {
         if (App.history.name.trim() === '') {
@@ -261,8 +267,14 @@
       // 获取所有保存的json
       listHistory: function () {
         localforage.iterate(function (value, key, iterationNumber) {
-          value.key = key
-          App.historys.push(value)
+          if (key[0] !== '#') {
+            value.key = key
+            App.historys.push(value)
+          }
+          if (key === '#theme') {
+            // 设置默认主题
+            App.checkedTheme = value
+          }
         })
       },
 
@@ -270,6 +282,38 @@
       exportTxt: function () {
         saveTextAs(App.jsoncon, App.exTxt.name + '.txt')
         App.isExportTxtShow = false
+      },
+
+      // 切换主题
+      switchTheme: function (index) {
+        this.checkedTheme = index
+        localforage.setItem('#theme', index)
+      },
+
+      // 获取分享的链接
+      shareUrl: function (key) {
+        return `${window.location.origin}?key=${key}`
+      },
+
+      // 分享
+      share: function () {
+        let con = App.jsoncon
+        if (con.trim() === '') {
+          return
+        }
+        $.ajax({
+          type: 'POST',
+          url: 'http://192.168.26.128:5010/json',
+          contentType: 'application/json; charset=utf-8',
+          data: JSON.stringify({con: con, key: App.shareKey}),
+          success: (data) => {
+            App.shareKey = uuidv1()
+            if (data.status) {
+              Helper.alert('分享成功，已将链接复制到剪贴板', 'success')
+            } else {
+            }
+          }
+        })
       }
     },
     watch: {
@@ -277,8 +321,31 @@
         App.showJsonView()
       }
     },
+    computed: {
+      theme: function () {
+        let th = this.themes[this.checkedTheme]
+        let result = {}
+        let index = 0
+        ;['key', 'String', 'Number', 'Boolean', 'Null', 'link-link', 'link-hover'].forEach(key => {
+          result[key] = th[index]
+          index++
+        })
+        return result
+      }
+    },
     created () {
       this.listHistory()
+      var clipboard = new Clipboard('.copy-btn')
+      let sps = window.location.href.split('?key=')
+      let jsonID = sps[sps.length - 1]
+      this.shareKey = uuidv1()
+      if (sps.length > 1 && jsonID.length > 5) {
+        $.get(`http://192.168.26.128:5010/json?key=${jsonID}`, function (data) {
+          if (data.status) {
+            App.jsoncon = data.item.con
+          }
+        })
+      }
     }
   })
 })()
