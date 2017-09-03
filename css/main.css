@@ -237,6 +237,7 @@ textarea {
   align-items: center;
   z-index: 100;
   background-color: #FFF;
+  box-shadow: 1px 1px 1px rgba(244, 243, 243, 0.64)
 }
 
 
@@ -424,13 +425,15 @@ textarea {
     color: #FFF;
 }
 
-
-.json-link:link, .json-link:visited {
-  color: #717171;
+.json-link:link {
   text-decoration: none 
 }
+/* .json-link:link, .json-link:visited {
+  color: #717171;
+  text-decoration: none 
+} */
 .json-link:hover, .json-link:active {
-  color: #3ab54a;
+  color: #3ab54a!important;
 }
 
 .splitx {

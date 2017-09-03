@@ -7,6 +7,7 @@
     <meta name="description" content="一款简洁优雅的在线json解析器，可能是目前最好用的json在线查看工具"/>
     <link href="css/hint.min.css" rel="stylesheet">
     <!-- <link href="css/diffview.css" rel="stylesheet"> -->
+    <link href="css/loading.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
   </head>
 
@@ -22,10 +23,7 @@
 
         <div class="top-right">
           <a href="https://github.com/bimohxh/jsonon" target="_blank">
-          GitHub
-            <!--<svg class="icon">
-              <use xlink:href="svg/icon.svg#github"></use>
-            </svg>-->
+          已开源在 GitHub 上
           </a>
         </div>
       </div>
@@ -84,7 +82,15 @@
               </a>
             </div>  
             <div class="pull-right">
-              <a class="hint--top save-tool copy-btn"  data-hint="分享" href="javascript:void(0)" @click="share" data-clipboard-target="#share-input">
+              <div class="loader" v-show="isSharing">
+                <div class="ball-pulse-sync">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              </div>
+
+              <a class="hint--top save-tool copy-btn"  data-hint="分享" href="javascript:void(0)" @click="share" data-clipboard-target="#share-input" v-show="!isSharing">
                 <svg class="icon">
                   <use xlink:href="svg/icon.svg#share"></use>
                 </svg>
@@ -215,7 +221,7 @@
           <span class="key" v-show="field" v-bind:style="{color: theme.key}">"{{field}}": </span>
           <span  v-bind:class="'val val-' + getTyp(val)" v-bind:style="{color: theme[getTyp(val)]}">
             <span v-if="!isaLink(val)">{{formatVal(val)}}</span>
-            <a v-if="isaLink(val)" :href="val" target="_blank" class="json-link" :style="{}">{{formatVal(val)}}</a>
+            <a v-if="isaLink(val)" :href="val" target="_blank" class="json-link" :style="{color: theme['link-link']}">{{formatVal(val)}}</a>
             <span v-if="!isend">,</span>
           </span>
         </template>

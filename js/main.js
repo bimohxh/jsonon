@@ -100,10 +100,10 @@
 
   // 主题 [key, String, Number, Boolean, Null, link-link, link-hover]
   let themes = [
-    ['#92278f', '#3ab54a', '#25aae2', '#f3934e', '#f34e5c', '#717171', '#3ab54a'],
-    ['rgb(19, 158, 170)', '#cf9f19', '#ec4040', '#7cc500', 'rgb(211, 118, 126)', '#717171', '#3ab54a'],
-    ['#886', '#25aae2', '#e60fc2', '#f43041', 'rgb(180, 83, 244)', '#717171', '#3ab54a'],
-    ['rgb(97, 97, 102)', '#cf4c74', '#20a0d5', '#cd1bc4', '#c1b8b9', '#717171', '#3ab54a']
+    ['#92278f', '#3ab54a', '#25aae2', '#f3934e', '#f34e5c', '#717171'],
+    ['rgb(19, 158, 170)', '#cf9f19', '#ec4040', '#7cc500', 'rgb(211, 118, 126)', 'rgb(15, 189, 170)'],
+    ['#886', '#25aae2', '#e60fc2', '#f43041', 'rgb(180, 83, 244)', 'rgb(148, 164, 13)'],
+    ['rgb(97, 97, 102)', '#cf4c74', '#20a0d5', '#cd1bc4', '#c1b8b9', 'rgb(25, 8, 174)']
   ]
   var App = new Vue({
     el: '#app',
@@ -124,7 +124,8 @@
       },
       themes: themes,
       checkedTheme: 0,
-      shareKey: '' // 分享后返回的ID
+      shareKey: '', // 分享后返回的ID
+      isSharing: false
     },
     methods: {
 
@@ -301,15 +302,17 @@
         if (con.trim() === '') {
           return
         }
+        App.isSharing = true
         $.ajax({
           type: 'POST',
           url: 'http://192.168.26.128:5010/json',
           contentType: 'application/json; charset=utf-8',
           data: JSON.stringify({con: con, key: App.shareKey}),
           success: (data) => {
+            App.isSharing = false
             App.shareKey = uuidv1()
             if (data.status) {
-              Helper.alert('分享成功，已将链接复制到剪贴板', 'success')
+              Helper.alert('分享成功，已将链接复制到剪贴板，只能保存24小时', 'success')
             } else {
             }
           }
@@ -326,7 +329,7 @@
         let th = this.themes[this.checkedTheme]
         let result = {}
         let index = 0
-        ;['key', 'String', 'Number', 'Boolean', 'Null', 'link-link', 'link-hover'].forEach(key => {
+        ;['key', 'String', 'Number', 'Boolean', 'Null', 'link-link'].forEach(key => {
           result[key] = th[index]
           index++
         })
