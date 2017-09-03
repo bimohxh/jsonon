@@ -1,7 +1,7 @@
 'use strict';
-const ApiUrl = 'https://api.awesomes.cn'
 
 (function () {
+  var ApiUrl = 'https://api.awesomes.cn'
   Vue.component('vue-item', {
     props: ['jsondata', 'theme'],
     template: '#item-template'
