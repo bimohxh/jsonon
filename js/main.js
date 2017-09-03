@@ -1,4 +1,6 @@
 'use strict';
+const ApiUrl = 'https://api.awesomes.cn'
+
 (function () {
   Vue.component('vue-item', {
     props: ['jsondata', 'theme'],
@@ -305,7 +307,7 @@
         App.isSharing = true
         $.ajax({
           type: 'POST',
-          url: 'http://192.168.26.128:5010/json',
+          url: `${ApiUrl}/json`,
           contentType: 'application/json; charset=utf-8',
           data: JSON.stringify({con: con, key: App.shareKey}),
           success: (data) => {
@@ -343,7 +345,7 @@
       let jsonID = sps[sps.length - 1]
       this.shareKey = uuidv1()
       if (sps.length > 1 && jsonID.length > 5) {
-        $.get(`http://192.168.26.128:5010/json?key=${jsonID}`, function (data) {
+        $.get(`${ApiUrl}/json?key=${jsonID}`, function (data) {
           if (data.status) {
             App.jsoncon = data.item.con
           }
