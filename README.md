@@ -44,4 +44,4 @@ webon deploy
 
 
 ## License
-[MIT](http://opensource.org/licenses/MIT)
+[Apache License 2.0](http://choosealicense.online/licenses/apache-2.0/)
