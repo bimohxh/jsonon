@@ -1,11 +1,25 @@
+.DS_Store
 node_modules
-start.sh
-npm-debug.log
-.sass-cache
-# VIM
-*~
-*.swp
-dist
-doc
-config/local_env.json
-*.config.json
+/dist
+
+# local env files
+.env.local
+.env.*.local
+env.json
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+webon.config.json
+webon.log.json
