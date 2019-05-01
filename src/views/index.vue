@@ -9,7 +9,7 @@
     </div>
     <div class="split-box"></div>
     <div class="right-box">
-      <right-box :jsonstr="jsonstr" />
+      <right-box :jsonstr="jsonstr" @setVal="setVal" />
     </div>
   </div>
   <!--用于移动的时候遮住文本域 避免被选中-->
@@ -26,7 +26,7 @@ export default {
   data () {
     return {
       jsonstr: '{\n\
-  "name": "Json on",\n\
+  "name": ["Json on"],\n\
   "description": "一个简洁的在线 JSON 查看器",\n\
   "open source": {\n\
     "是否开源": true,\n\
@@ -54,6 +54,12 @@ export default {
       $('body').unbind('mousemove')
       $('.move-cover').hide()
     })
+  },
+  methods: {
+    // 修改 jsonstr 的值
+    setVal: function (val) {
+      this.jsonstr = val
+    }
   }
 }
 </script>
@@ -64,6 +70,7 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
+  font-size: 13px;
   .top-box {
     height: 50px;
     flex-shrink: 0;
@@ -89,6 +96,7 @@ export default {
       font-size: 14px;
       line-height: 1.42857143;
       box-sizing: border-box;
+      color: #555
     }
   }
 

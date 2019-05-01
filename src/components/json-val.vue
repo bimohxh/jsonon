@@ -1,5 +1,6 @@
 <template>
   <div class="keyval">
+    
     <!--值为值类型时-->
     <template v-if="!isObjectArr(val)">
       <span class="key" v-show="field" :style="{color: theme.key}">"{{field}}": </span>
@@ -12,20 +13,27 @@
 
 
     <!--值为引用类型时 key + 展开折叠ICON-->
-    <template v-else>
-      <!--展开的时候-->
+    <!--<template v-else>
       <div v-show="childExpand">
         <span class="key" :style="{color: theme.key}" v-show="field">"{{field}}": </span>
         <a href="javascript: void(0)" @click="childExpand = !childExpand" style="margin-right: 5px">
           <v-icon name="minus-square" size="12" />
         </a>
         <span>{</span>
-        <json-item :jsondata="val" :theme="theme" />
+        <json-item :jsondata="val" :theme="theme" v-if="getTyp(val) == 'Object'" />
+
+        <span  v-if="getTyp(val) == 'Array'">
+          <span>[</span>
+          <span class="val">
+            <json-item :jsondata="sub" v-for="(sub, index) in val" :isend="index == val.length - 1" :theme="theme"></json-item>
+          </span> 
+          <div class="brace-end">]<span v-if="!isend">,</span></div>
+        </span>  
+
         <div class="brace-end">
           }<span v-if="!isend">,</span>
         </div>
       </div>
-      <!--折叠的时候-->
       <div v-show="!childExpand">
         <span class="key" :style="{color: theme.key}" v-show="field">"{{field}}": </span>
         <a href="javascript: void(0)" @click="childExpand = !childExpand" style="margin-right: 5px">
@@ -34,44 +42,54 @@
         <span>{{getTyp(val)}}</span>
         {<label class="ex-alia" @click="childExpand = !childExpand">{{objLength(val)}}</label>}
         <span v-if="!isend">,</span>
-      </span>
       </div>
-    </template>
+    </template>-->
 
 
     <!--值为对象时-->
-    <!--<template v-if="getTyp(val) == 'Object'">
+    <template v-if="getTyp(val) == 'Object'">
+      <span class="key" :style="{color: theme.key}" v-show="field">"{{field}}": </span>
+      <a href="javascript: void(0)" @click="childExpand = !childExpand" style="margin-right: 5px">
+        <v-icon name="minus-square" size="12" />
+      </a>
+    
       <span class="expand-view"  v-show="childExpand">
+        <span>{</span>
         <json-item :jsondata="val" :theme="theme" />
-        <div class="brace-end">
-          }<span v-if="!isend">,</span>
+        <div class="brace-end">}<span v-if="!isend">,</span>
         </div>
       </span>  
 
       <span class="fold-view" v-show="!childExpand">
         {{getTyp(val)}}
-        {<label class="ex-alia" @click="childExpand = !childExpand">{{objLength(val)}}</label>
-        }<span v-if="!isend">,</span>
+        {<label class="ex-alia" @click="childExpand = !childExpand">{{objLength(val)}}</label>}
+        <span v-if="!isend">,</span>
       </span>
-    </template>-->
+    </template>
 
 
     <!--值为数组时-->
-    <!--<template v-if="getTyp(val) == 'Array'">
-      <span class="expand-view">
+    <template v-if="getTyp(val) == 'Array'">
+      <span class="key" :style="{color: theme.key}" v-show="field">"{{field}}": </span>
+      <a href="javascript: void(0)" @click="childExpand = !childExpand" style="margin-right: 5px">
+        <v-icon name="minus-square" size="12" />
+      </a>
+      
+      <span v-show="childExpand">
         <span>[</span>
-        <span class="val">
-          <json-outer :jsondata="sub" v-for="(sub, index) in val" :isend="index == val.length - 1" :theme="theme"></json-outer>
-        </span> 
+        <json-item :jsondata="val" :theme="theme" />
         <div class="brace-end">]<span v-if="!isend">,</span></div>
-      </span>  
+      </span>
 
-      <span class="fold-view">{{getTyp(val)}}[<label class="arrlen ex-alia" @click="expand($event)">{{val.length}}</label>]<span v-if="!isend">,</span></span>
+      <span v-show="!childExpand">
+        <span>{{getTyp(val)}}</span>
+        [<label class="arrlen ex-alia" @click="childExpand = !childExpand">{{val.length}}</label>]
+        <span v-if="!isend">,</span>
+      </span>
 
-    </template>-->
+    </template>
   </div>
 </template>
-
 
 <style lang="scss">
 .ex-alia {
@@ -94,6 +112,11 @@ export default {
   },
   components: {
     JsonItem
+  },
+  watch: {
+    '$store.state.expandState': function (val) {
+      this.childExpand = val[0] === 'e'
+    }
   },
   methods: {
     // 判断数据类型

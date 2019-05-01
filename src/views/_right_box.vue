@@ -9,16 +9,16 @@
       <a href="javascript: void(0)">
         <v-icon name="beauty" />
       </a>
-      <a href="javascript: void(0)">
+      <a href="javascript: void(0)" @click="clearAll">
         <v-icon name="clear" />
       </a>
       <a href="javascript: void(0)">
         <v-icon name="export-txt" />
       </a>
-      <a href="javascript: void(0)">
+      <a href="javascript: void(0)" @click="expandAll">
         <v-icon name="expand" />
       </a>
-      <a href="javascript: void(0)">
+      <a href="javascript: void(0)" @click="collapseAll">
         <v-icon name="collapse" />
       </a>
     </div>
@@ -39,7 +39,7 @@
   </div>
   <div class="editor-box">
     <!-- JSON 正常显示视图-->
-    <json-item :jsondata="jsondata" :theme="theme" v-if="view === 'json'" />
+    <json-item :jsondata="jsondata" :theme="theme" v-if="view === 'json'" expandAction="expandAction" />
 
     <!-- 解析异常报错视图 -->
     <div v-if="view === 'error'" class="error-view">
@@ -57,7 +57,8 @@ export default {
     return {
       jsondata: {},
       view: 'json',
-      parseError: ''
+      parseError: '',
+      expandAction: ''
     }
   },
   components: {
@@ -92,6 +93,21 @@ export default {
         this.view = 'error'
         this.parseError =  ex.message
       }
+    },
+
+    // 全部折叠
+    collapseAll: function () {
+      this.$store.commit('expand', 'collapse-' + Date.now())
+    },
+    
+    // 全部展开
+    expandAll: function () {
+      this.$store.commit('expand', 'expand-' + Date.now())
+    },
+
+    // 清空
+    clearAll: function () {
+      this.$emit('setVal', '')
     }
   },
   created () {
@@ -134,6 +150,7 @@ export default {
 .editor-box {
   flex-grow: 1;
   font-weight: bold;
+  line-height: 20px;
   a {
     text-decoration: none;
     display: inline-block;
@@ -142,6 +159,13 @@ export default {
   .error-view {
     color: red;
     padding: 10px 30px;
+  }
+ 
+  .json-item {
+    padding-left: 30px;
+  }
+  & > .json-item {
+    padding-left: 12px;
   }
 }
 

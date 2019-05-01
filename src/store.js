@@ -5,11 +5,11 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    session: {}
+    expandState: 'expand-' + Date.now
   },
   mutations: {
-    login (state, val) {
-      state.session = val
+    expand (state, val) {
+      state.expandState = val
     }
   },
   actions: {
