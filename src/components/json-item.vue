@@ -1,17 +1,31 @@
 <template>
 <ul class="json-item">
   <!-- 凡是遇到数组或者是对象就从这里开始 -->
-  <json-val v-if="getTyp(jsondata) === 'Object'" :field="key"  :theme="theme" :val="val" :isend="index == objLength(jsondata) - 1" v-for="(val, key, index) in jsondata"></json-val>
-  <json-val v-if="getTyp(jsondata) === 'Array'" :theme="theme"  :val="val" :isend="index == objLength(jsondata) - 1" v-for="(val, index) in jsondata"></json-val>
+  <div v-if="getTyp(jsondata) === 'Object'">
+    <json-val  :field="key"  :theme="theme" :val="val" :isend="index == objLength(jsondata) - 1" v-for="(val, key, index) in jsondata"></json-val>
+  </div>
+  
+  <div  v-if="getTyp(jsondata) === 'Array'">
+    <json-val :theme="theme"  :val="val" :isend="index == objLength(jsondata) - 1" v-for="(val, index) in jsondata"></json-val>
+  </div>
 </ul>
 </template>
 
 <script>
 export default {
   name: 'json-item',
-  props: ['theme', 'jsondata', 'expandAction'],
+  props: ['jsondata', 'expandAction'],
+  data () {
+    return {
+    }
+  },
   components: {
     JsonVal: () => import('./json-val.vue')
+  },
+   computed: {
+    theme: function () {
+      return this.$store.state.theme.obj
+    }
   },
   methods: {
     // 计算对象的长度

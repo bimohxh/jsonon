@@ -2,6 +2,16 @@
   <router-view />
 </template>
 
+<script>
+import themes from './lib/theme'
+export default {
+  created () {
+    let th = themes[0]
+    this.$store.commit('setTheme', th)
+  }
+}
+</script>
+
 <style lang="scss">
 // @import "../node_modules/bootstrap/scss/_functions.scss";
 // @import "../node_modules/bootstrap/scss/_variables.scss";

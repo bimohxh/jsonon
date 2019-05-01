@@ -11,41 +11,6 @@
       </span>
     </template>
 
-
-    <!--值为引用类型时 key + 展开折叠ICON-->
-    <!--<template v-else>
-      <div v-show="childExpand">
-        <span class="key" :style="{color: theme.key}" v-show="field">"{{field}}": </span>
-        <a href="javascript: void(0)" @click="childExpand = !childExpand" style="margin-right: 5px">
-          <v-icon name="minus-square" size="12" />
-        </a>
-        <span>{</span>
-        <json-item :jsondata="val" :theme="theme" v-if="getTyp(val) == 'Object'" />
-
-        <span  v-if="getTyp(val) == 'Array'">
-          <span>[</span>
-          <span class="val">
-            <json-item :jsondata="sub" v-for="(sub, index) in val" :isend="index == val.length - 1" :theme="theme"></json-item>
-          </span> 
-          <div class="brace-end">]<span v-if="!isend">,</span></div>
-        </span>  
-
-        <div class="brace-end">
-          }<span v-if="!isend">,</span>
-        </div>
-      </div>
-      <div v-show="!childExpand">
-        <span class="key" :style="{color: theme.key}" v-show="field">"{{field}}": </span>
-        <a href="javascript: void(0)" @click="childExpand = !childExpand" style="margin-right: 5px">
-          <v-icon name="plus-square" size="12" />
-        </a>
-        <span>{{getTyp(val)}}</span>
-        {<label class="ex-alia" @click="childExpand = !childExpand">{{objLength(val)}}</label>}
-        <span v-if="!isend">,</span>
-      </div>
-    </template>-->
-
-
     <!--值为对象时-->
     <template v-if="getTyp(val) == 'Object'">
       <span class="key" :style="{color: theme.key}" v-show="field">"{{field}}": </span>
@@ -55,7 +20,7 @@
     
       <span class="expand-view"  v-show="childExpand">
         <span>{</span>
-        <json-item :jsondata="val" :theme="theme" />
+        <json-item :jsondata="val" />
         <div class="brace-end">}<span v-if="!isend">,</span>
         </div>
       </span>  
@@ -77,7 +42,7 @@
       
       <span v-show="childExpand">
         <span>[</span>
-        <json-item :jsondata="val" :theme="theme" />
+        <json-item :jsondata="val" />
         <div class="brace-end">]<span v-if="!isend">,</span></div>
       </span>
 
@@ -104,10 +69,15 @@
 import JsonItem from './json-item'
 export default {
   name: 'json-val',
-  props: ['field', 'val', 'theme', 'isend'],
+  props: ['field', 'val', 'isend'],
   data () {
     return {
       childExpand: true
+    }
+  },
+  computed: {
+    theme: function () {
+      return this.$store.state.theme.obj
     }
   },
   components: {
