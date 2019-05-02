@@ -1,15 +1,16 @@
 <template>
 <div class="json-box">
-  <div class="top-box">
-    <h3>JSONON</h3>
-  </div>
+  <top-box />
   <div class="bottom-box">
     <div class="left-box">
       <textarea v-model="jsonstr"></textarea>
     </div>
     <div class="split-box"></div>
     <div class="right-box">
-      <right-box :jsonstr="jsonstr" @setVal="setVal" />
+      <div class="right-inner">
+        <tool-box :jsonstr="jsonstr" @setVal="setVal" />
+        <view-box :jsonstr="jsonstr" @setVal="setVal" />
+      </div>
     </div>
   </div>
   <!--用于移动的时候遮住文本域 避免被选中-->
@@ -19,7 +20,9 @@
 </template>
 
 <script>
-import RightBox from './_right_box'
+import ViewBox from './_view_box'
+import ToolBox from './_tool_box'
+import TopBox from './_top_box'
 const $ = require('jquery')
 
 export default {
@@ -36,7 +39,9 @@ export default {
     }
   },
   components: {
-    RightBox
+    ViewBox,
+    ToolBox,
+    TopBox
   },
   mounted () {
     //横向拖动
@@ -71,13 +76,7 @@ export default {
   display: flex;
   flex-direction: column;
   font-size: 13px;
-  .top-box {
-    height: 50px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    border-bottom: #DDD 1px solid;
-  }
+  
   .bottom-box {
     flex-grow: 1;
     display: flex;
@@ -108,6 +107,7 @@ export default {
     border-bottom: 0;
     flex-shrink: 0;
     position: relative;
+    // height: 100%;
   }
 
   .right-box {

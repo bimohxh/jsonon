@@ -1,5 +1,7 @@
 <template>
   <div class="keyval">
+
+    <span class="line-number">{{line}}</span>
     
     <!--值为值类型时-->
     <template v-if="!isObjectArr(val)">
@@ -15,18 +17,19 @@
     <template v-if="getTyp(val) == 'Object'">
       <span class="key" :style="{color: theme.key}" v-show="field">"{{field}}": </span>
       <a href="javascript: void(0)" @click="childExpand = !childExpand" style="margin-right: 5px">
-        <v-icon name="minus-square" size="12" />
+        <v-icon :name="childExpand ? 'minus-square' : 'plus-square'" size="12" />
       </a>
     
       <span class="expand-view"  v-show="childExpand">
         <span>{</span>
-        <json-item :jsondata="val" />
+        <json-item :jsondata="val" :line="line + 1"/>
         <div class="brace-end">}<span v-if="!isend">,</span>
+          <span class="line-number">{{line}}</span>
         </div>
       </span>  
 
       <span class="fold-view" v-show="!childExpand">
-        {{getTyp(val)}}
+        <span>{{getTyp(val)}}</span>
         {<label class="ex-alia" @click="childExpand = !childExpand">{{objLength(val)}}</label>}
         <span v-if="!isend">,</span>
       </span>
@@ -37,13 +40,15 @@
     <template v-if="getTyp(val) == 'Array'">
       <span class="key" :style="{color: theme.key}" v-show="field">"{{field}}": </span>
       <a href="javascript: void(0)" @click="childExpand = !childExpand" style="margin-right: 5px">
-        <v-icon name="minus-square" size="12" />
+        <v-icon :name="childExpand ? 'minus-square' : 'plus-square'" size="12" />
       </a>
       
       <span v-show="childExpand">
         <span>[</span>
-        <json-item :jsondata="val" />
-        <div class="brace-end">]<span v-if="!isend">,</span></div>
+        <json-item :jsondata="val" :line="line + 1"/>
+        <div class="brace-end">]<span v-if="!isend">,</span>
+          <span class="line-number">{{line}}</span>
+        </div>
       </span>
 
       <span v-show="!childExpand">
@@ -63,13 +68,19 @@
   color: #25aae2;
   padding: 0 2px;
 }
+
+.line-number {
+  position: absolute;
+  left: 10px;
+  color: #b0b3b6
+}
 </style>
 
 <script>
 import JsonItem from './json-item'
 export default {
   name: 'json-val',
-  props: ['field', 'val', 'isend'],
+  props: ['field', 'val', 'isend', 'line'],
   data () {
     return {
       childExpand: true

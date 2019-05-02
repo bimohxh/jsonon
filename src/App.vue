@@ -4,6 +4,7 @@
 
 <script>
 import themes from './lib/theme'
+require('hint.css')
 export default {
   created () {
     let th = themes[0]

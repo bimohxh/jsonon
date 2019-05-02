@@ -1,65 +1,52 @@
 <template>
-<div class="right-inner">
-  <!--操作栏-->
-  <div class="tool-box">
-    <div class="tool-left">
-      <a href="javascript: void(0)" @click="compress">
-        <v-icon name="database" />
-      </a>
-      <a href="javascript: void(0)" @click="beauty">
-        <v-icon name="beauty" />
-      </a>
-      <a href="javascript: void(0)" @click="clearAll">
-        <v-icon name="clear" />
-      </a>
-      <a href="javascript: void(0)">
-        <v-icon name="export-txt" />
-      </a>
-      <a href="javascript: void(0)" @click="expandAll">
-        <v-icon name="expand" />
-      </a>
-      <a href="javascript: void(0)" @click="collapseAll">
-        <v-icon name="collapse" />
-      </a>
-    </div>
-    <div class="tool-right">
-      <a href="javascript: void(0)">
-        <v-icon name="share" />
-      </a>
-      <a href="javascript: void(0)">
-        <v-icon name="record" />
-      </a>
-      <a href="javascript: void(0)">
-        <v-icon name="save" />
-      </a>
-      <!-- 主题 -->
-      <span class="btn-box">
-        <a href="javascript: void(0)">
-          <v-icon name="theme" />
-        </a>
-        <div class="theme-box pop">
-          <div :class="'theme-item checked-' + (isCheckedTheme(theme))" v-for="theme in themes" @click="switchTheme(theme)">
-            <span class="theme-color" v-for="color in theme" :style="{backgroundColor: color}" ></span>
-          </div>
-        </div>
-      </span>
-    </div>
-  </div>
-  <div class="editor-box">
-    <!-- JSON 正常显示视图-->
-    <json-item :jsondata="jsondata"  v-if="view === 'json'" expandAction="expandAction" />
-
-    <!-- 解析异常报错视图 -->
-    <div v-if="view === 'error'" class="error-view">
-      <pre>{{parseError}}</pre>
-    </div>
+<div class="tool-box">
+  <div class="tool-left">
+    <a href="javascript: void(0)" @click="compress"  class="hint--top"  data-hint="压缩">
+      <v-icon name="database" />
+    </a>
+    <a href="javascript: void(0)" @click="beauty"  class="hint--top"  data-hint="美化">
+      <v-icon name="beauty" />
+    </a>
+    <a href="javascript: void(0)" @click="clearAll"  class="hint--top"  data-hint="清空">
+      <v-icon name="clear" />
+    </a>
     
+    <a href="javascript: void(0)" @click="expandAll"  class="hint--top"  data-hint="全部展开">
+      <v-icon name="expand" />
+    </a>
+    <a href="javascript: void(0)" @click="collapseAll"  class="hint--top"  data-hint="全部折叠">
+      <v-icon name="collapse" />
+    </a>
+  </div>
+  <div class="tool-right">
+    <a href="javascript: void(0)"  @click="exportFile"  class="hint--top"  data-hint="导出下载">
+      <v-icon name="export-txt" />
+    </a>
+    <a href="javascript: void(0)" class="hint--top"  data-hint="分享">
+      <v-icon name="share" />
+    </a>
+    <a href="javascript: void(0)" class="hint--top"  data-hint="历史保存">
+      <v-icon name="record" />
+    </a>
+    <a href="javascript: void(0)" class="hint--top"  data-hint="保存在本地">
+      <v-icon name="save" />
+    </a>
+    <!-- 主题 -->
+    <span class="btn-box">
+      <a href="javascript: void(0)" class="hint--top"  data-hint="换肤">
+        <v-icon name="theme" />
+      </a>
+      <div class="theme-box pop">
+        <div :class="'theme-item checked-' + (isCheckedTheme(theme))" v-for="theme in themes" @click="switchTheme(theme)">
+          <span class="theme-color" v-for="color in theme" :style="{backgroundColor: color}" ></span>
+        </div>
+      </div>
+    </span>
   </div>
 </div>
 </template>
 
 <script>
-import JsonItem from '@/components/json-item'
 import themes from '../lib/theme'
 const Parse = require('../lib/parse')
 
@@ -67,34 +54,10 @@ export default {
   props: ['jsonstr'],
   data () {
     return {
-      jsondata: {},
-      view: 'json',
-      parseError: '',
-      expandAction: '',
       themes: themes
     }
   },
-  components: {
-    JsonItem
-  },
-  watch: {
-    jsonstr: function () {
-      this.setJSON()
-    }
-  },
   methods: {
-    setJSON: function () {
-      try {
-        this.jsondata = {
-          "": window.jsonlint.parse(this.jsonstr)
-        }
-        this.view = 'json'
-      } catch (ex) {
-        this.view = 'error'
-        this.parseError =  ex.message
-      }
-    },
-
     // 全部折叠
     collapseAll: function () {
       this.$store.commit('expand', 'collapse-' + Date.now())
@@ -128,20 +91,19 @@ export default {
     // 切换主题
     switchTheme: function (theme) {
       this.$store.commit('setTheme', theme)
+    },
+
+    // 导出文件
+    exportFile: function () {
+      var FileSaver = require('file-saver');
+      var blob = new Blob([this.jsonstr], {type: 'text/plain;charset=utf-8'})
+      FileSaver.saveAs(blob, 'jsonon.txt')
     }
-  },
-  created () {
-    this.setJSON()
   }
 }
 </script>
 
 <style lang="scss">
-  .right-inner {
-    display: flex;
-    flex-direction: column;
-  }
-
   .tool-box {
     flex-shrink: 0;
     display: flex;
