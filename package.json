@@ -14,6 +14,7 @@
     "file-saver": "^2.0.1",
     "hint.css": "^2.6.0",
     "jquery": "^3.4.0",
+    "localforage": "^1.7.3",
     "sass-loader": "^7.1.0",
     "store": "^2.0.12",
     "vue": "^2.6.10",

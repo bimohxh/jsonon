@@ -1,10 +1,7 @@
 <template>
 <div class="editor-box">
   <!-- JSON 正常显示视图-->
-  <div class="json-view" v-if="view === 'json'">
-    <div class="line-box"></div>
-    <json-item :jsondata="jsondata"  :line="1" />
-  </div>
+  <json-item :jsondata="jsondata" v-if="view === 'json'" />
 
   <!-- 解析异常报错视图 -->
   <div v-if="view === 'error'" class="error-view">

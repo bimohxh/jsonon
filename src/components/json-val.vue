@@ -1,8 +1,6 @@
 <template>
   <div class="keyval">
 
-    <span class="line-number">{{line}}</span>
-    
     <!--值为值类型时-->
     <template v-if="!isObjectArr(val)">
       <span class="key" v-show="field" :style="{color: theme.key}">"{{field}}": </span>
@@ -22,9 +20,8 @@
     
       <span class="expand-view"  v-show="childExpand">
         <span>{</span>
-        <json-item :jsondata="val" :line="line + 1"/>
+        <json-item :jsondata="val" />
         <div class="brace-end">}<span v-if="!isend">,</span>
-          <span class="line-number">{{line}}</span>
         </div>
       </span>  
 
@@ -45,9 +42,8 @@
       
       <span v-show="childExpand">
         <span>[</span>
-        <json-item :jsondata="val" :line="line + 1"/>
+        <json-item :jsondata="val" />
         <div class="brace-end">]<span v-if="!isend">,</span>
-          <span class="line-number">{{line}}</span>
         </div>
       </span>
 
