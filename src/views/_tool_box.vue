@@ -83,7 +83,7 @@
         <v-icon name="theme" />
       </a>
       <div class="theme-box pop-card">
-        <div :class="'theme-item checked-' + (isCheckedTheme(theme))" v-for="theme in themes" :key="theme" @click="switchTheme(theme)">
+        <div :class="'theme-item checked-' + (isCheckedTheme(theme))" v-for="theme in themes" :key="theme[0]" @click="switchTheme(theme)">
           <span class="theme-color" v-for="color in theme" :key="color" :style="{backgroundColor: color}" ></span>
         </div>
       </div>
@@ -104,6 +104,7 @@ export default {
       themes: themes,
       historys: [],
       saveName: '',
+      config: {},
       showpop: {
         save: false,
         theme: false,
@@ -146,6 +147,8 @@ export default {
     // 切换主题
     switchTheme: function (theme) {
       this.$store.commit('setTheme', theme)
+      this.config.theme = theme
+      localforage.setItem('config', this.config, () => {})
     },
 
     // 导出文件
@@ -191,6 +194,13 @@ export default {
     }
   },
   created () {
+    localforage.getItem('config').then(value => {
+      this.config = value || {}
+      if (this.config.theme) {
+        this.switchTheme(this.config.theme)
+      }
+    })
+
     localforage.getItem('historys').then(value => {
       this.historys = value || []
     })
