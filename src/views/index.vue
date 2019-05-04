@@ -3,7 +3,7 @@
   <top-box />
   <div class="bottom-box">
     <div class="left-box">
-      <textarea v-model="jsonstr"></textarea>
+      <textarea v-model="jsonstr" spellcheck="false"></textarea>
     </div>
     <div class="split-box"></div>
     <div class="right-box">

@@ -1,7 +1,7 @@
 <template>
 <div class="top-box">
   <div style="flex-grow: 1">
-    <h3>JSON ON</h3>
+    <img src="../assets/logo.png" class="logo" />
   </div>
   <div>
     <div class="slide-in" v-if="showSlogan" v-html="currentSlogan"></div>
@@ -56,6 +56,10 @@ export default {
   padding: 0 10px;
   display: flex;
   overflow: hidden;
+
+  .logo {
+    height: 30px;
+  }
 }
 
 @keyframes slidein {
