@@ -16,6 +16,7 @@ A json online viewer and formatter.
 - all saved json lists view and fill data to current view and remove it.
 - switch between themes
 - share to other online
+- unicode auto transform to chinese
 
 
 ### development

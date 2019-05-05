@@ -120,6 +120,11 @@ export default {
     formatVal: function (val) {
       let _type = this.getTyp(val)
       if (_type === 'String') {
+        try {
+          val = eval("'" + val + "'")
+        } catch (ex) {
+          window.console.log(ex.message)
+        }
         return '"' + val + '"'
       }
       if (_type === 'Null') {
