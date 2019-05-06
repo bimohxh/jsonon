@@ -14,7 +14,6 @@
 <script>
 import JsonItem from '@/components/json-item'
 import themes from '../lib/theme'
-const Parse = require('../lib/parse')
 
 export default {
   props: ['jsonstr'],
