@@ -1,10 +1,14 @@
 <template>
 <div class="top-box">
-  <div style="flex-grow: 1">
+  <div class="top-left">
     <img src="../assets/logo.png" class="logo" />
+    <div class="slide-in" v-if="showSlogan" v-html="currentSlogan"></div>
   </div>
   <div>
-    <div class="slide-in" v-if="showSlogan" v-html="currentSlogan"></div>
+    <a href="https://github.com/bimohxh/jsonon" class="gitlink" target="_blank" title="GitHub地址">
+      <span style="margin-right: 10px;">github source or issue on</span>
+      <v-icon name="github" />
+    </a>
   </div>
 </div>
 </template>
@@ -56,9 +60,23 @@ export default {
   padding: 0 10px;
   display: flex;
   overflow: hidden;
+  
+  .top-left {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
 
-  .logo {
-    height: 30px;
+    .logo {
+      height: 30px;
+      margin-right: 10px;
+    }
+  }
+
+  .gitlink {
+    color: #8e9193;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
   }
 }
 
